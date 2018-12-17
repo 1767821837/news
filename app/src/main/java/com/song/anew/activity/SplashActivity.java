@@ -17,8 +17,9 @@ import com.song.anew.util.Sputil;
 
 public class SplashActivity extends AppCompatActivity {
     public static final String ENTYHOMEKEY = "ENTYHOME";
-    private Handler mhander ;
-private ImageView lv ;
+    private Handler mhander;
+    private ImageView lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,18 +27,18 @@ private ImageView lv ;
         mhander = new Handler();
 
         lv = findViewById(R.id.lv_splash);
-       initanm();
+        initanm();
 
     }
 
     private void initanm() {
-        AlphaAnimation aa = new AlphaAnimation(0,1);
+        AlphaAnimation aa = new AlphaAnimation(0, 1);
         aa.setDuration(1000);
         aa.setFillAfter(true);
-        ScaleAnimation sa = new ScaleAnimation(0,1,0,1,ScaleAnimation.RELATIVE_TO_SELF,0.5f,ScaleAnimation.RELATIVE_TO_SELF,0.5f);
+        ScaleAnimation sa = new ScaleAnimation(0, 1, 0, 1, ScaleAnimation.RELATIVE_TO_SELF, 0.5f, ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
         sa.setDuration(1000);
         aa.setFillAfter(true);
-        RotateAnimation ra = new RotateAnimation(0,360,RotateAnimation.RELATIVE_TO_PARENT,0.5f,RotateAnimation.RELATIVE_TO_PARENT,0.5f);
+        RotateAnimation ra = new RotateAnimation(0, 360, RotateAnimation.RELATIVE_TO_PARENT, 0.5f, RotateAnimation.RELATIVE_TO_PARENT, 0.5f);
         ra.setDuration(1000);
         ra.setFillAfter(true);
         AnimationSet set = new AnimationSet(false);
@@ -53,12 +54,14 @@ private ImageView lv ;
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                boolean  bo = new Sputil().getBoolean(getApplicationContext(), ENTYHOMEKEY,false);
-                if(bo){
-                    aoutjump(Mainactivity.class,1000);
-                }else{
-                    Intent intent = new Intent(getApplicationContext(),GuideActivity.class);
+                boolean bo = new Sputil().getBoolean(getApplicationContext(), ENTYHOMEKEY, false);
+                if (bo) {
+                    //aoutjump(Mainactivity.class, 1000);
+                    aoutjump(loginActivity.class, 1000);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), GuideActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
 
@@ -75,7 +78,7 @@ private ImageView lv ;
             @Override
             public void run() {
                 Intent intent = new Intent();
-                intent.setClass(getApplicationContext(),mainactivityClass);
+                intent.setClass(getApplicationContext(), mainactivityClass);
                 startActivity(intent);
                 finish();
             }

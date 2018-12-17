@@ -15,6 +15,7 @@ import com.song.anew.util.DensityUtil;
 public class Mainactivity extends SlidingFragmentActivity {
 
     ViewPager viewPager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +25,10 @@ public class Mainactivity extends SlidingFragmentActivity {
         initfragment();
 
     }
+
     private void initwidgetid() {
     }
+
     private void initfragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -34,6 +37,7 @@ public class Mainactivity extends SlidingFragmentActivity {
         ft.commit();
 
     }
+
     private void initslidingmenu() {
         //设置主页面
         setContentView(R.layout.activity_mainactivity);
@@ -55,13 +59,14 @@ public class Mainactivity extends SlidingFragmentActivity {
 
 
     public LiftmenuFragment getLiftmenuFragment() {
-        return (LiftmenuFragment)getSupportFragmentManager().findFragmentByTag("fl_main_leftcontent");
+        return (LiftmenuFragment) getSupportFragmentManager().findFragmentByTag("fl_main_leftcontent");
     }
 
     public ContentFragment getContentFragment() {
-        return (ContentFragment)getSupportFragmentManager().findFragmentByTag("fl_main_content");
+        return (ContentFragment) getSupportFragmentManager().findFragmentByTag("fl_main_content");
     }
-public FragmentManager getfragmentmanager(){
-        return  getSupportFragmentManager();
-}
+
+    public FragmentManager getfragmentmanager() {
+        return getSupportFragmentManager();
+    }
 }
