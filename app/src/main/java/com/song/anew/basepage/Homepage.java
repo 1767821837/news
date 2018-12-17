@@ -17,6 +17,8 @@ import org.xutils.x;
 public class Homepage extends BasePage {
     public Homepage(Context context) {
 
+
+
         super(context);
     }
 
