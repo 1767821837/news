@@ -40,6 +40,7 @@ public class loginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(loginActivity.this,RegisterActivity.class);
                 startActivity(intent);
+
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +48,7 @@ public class loginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(loginActivity.this,Mainactivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
