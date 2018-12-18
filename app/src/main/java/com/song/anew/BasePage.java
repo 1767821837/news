@@ -1,10 +1,10 @@
 package com.song.anew;
 
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 /**
@@ -16,6 +16,7 @@ public class BasePage {
     public Button but_back;
     public TextView tv_title;
     public ViewPager viewPager;
+    public TabLayout tablayout;
     public com.song.anew.view.SimpleViewpagerIndicator indicator;
 
 
@@ -29,7 +30,8 @@ public class BasePage {
         but_back = view.findViewById(R.id.but_back);
         tv_title = view.findViewById(R.id.tv_title);
         viewPager = view.findViewById(R.id.viewpager);
-        indicator = view.findViewById(R.id.indicator);
+        //indicator = view.findViewById(R.id.indicator);
+        tablayout=view.findViewById(R.id.tablayout);
 
 
         return view;
