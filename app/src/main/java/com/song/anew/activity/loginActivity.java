@@ -63,6 +63,9 @@ public class loginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
 
     }
+
+    public void login(View view) {
+    }
 }
 
 
