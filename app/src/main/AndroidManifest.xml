@@ -23,7 +23,8 @@
         <activity android:name=".activity.Mainactivity" />
         <activity android:name=".activity.MainActivity1" />
         <activity android:name=".activity.GuideActivity" />
-        <activity android:name=".activity.loginActivity"></activity>
+        <activity android:name=".activity.loginActivity" />
+        <activity android:name=".activity.RegisterActivity"></activity>
     </application>
 
 </manifest>
