@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.song.anew.activity.Mainactivity;
+
 /**
  * 公共类
  *
@@ -33,7 +35,13 @@ public class BasePage {
         viewPager = view.findViewById(R.id.viewpager);
         //indicator = view.findViewById(R.id.indicator);
         tablayout=view.findViewById(R.id.tablayout);
-
+but_back.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Mainactivity mainActivity = (Mainactivity) context;
+        mainActivity.getSlidingMenu().toggle();//关<->开
+    }
+});
 
         return view;
     }

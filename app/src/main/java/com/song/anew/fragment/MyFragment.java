@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.song.anew.R;
+import com.song.anew.activity.Mainactivity;
 
 
 @SuppressLint("ValidFragment")
@@ -52,5 +53,19 @@ public class MyFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onPause() {
+        Mainactivity mainactivity = (Mainactivity) getActivity();
+        mainactivity.setNohua(1);
+        super.onPause();
+    }
+
+    @Override
+    public void onStart() {
+        Mainactivity mainactivity = (Mainactivity) getActivity();
+        mainactivity.setNohua(0);
+        super.onStart();
     }
 }
