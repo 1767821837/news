@@ -113,7 +113,6 @@ public class GuideActivity extends AppCompatActivity {
 
         }
     }
-
     private void initData() {
 //        初始化数据
         widths = new DensityUtil().dp2px(getApplicationContext(), 10);

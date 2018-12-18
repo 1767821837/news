@@ -26,13 +26,14 @@ public class ContentFragment extends BaseFragment {
     @ViewInject(R.id.viewPager)
     private CustomScrollViewPager viewPagers;
     @ViewInject(R.id.rg_main)
-    private RadioGroup rg ;
+    private RadioGroup rg;
     View view = null;
-    private List<BasePage> basePages ;
+    private List<BasePage> basePages;
+
     @Override
     public View initview() {
         view = View.inflate(context, R.layout.content_fragment, null);
-        x.view().inject(this,view);
+        x.view().inject(this, view);
         rg.check(R.id.rb_home);
         rg.setOnCheckedChangeListener(new MyCheckchanglistener());
         basePages = new ArrayList<BasePage>();
@@ -42,41 +43,37 @@ public class ContentFragment extends BaseFragment {
         basePages.add(new lookpage(context));
         basePages.add(new Settingpage(context));
         viewPagers.setAdapter(new ViewPagerAdapter());
-
+        viewPagers.setOffscreenPageLimit(5);
         return view;
     }
-
 
 
     class MyCheckchanglistener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-switch (checkedId){
-    case R.id.rb_home:
-        viewPagers.setCurrentItem(0);
-        break;
-    case R.id.rg_news:
-        viewPagers.setCurrentItem(1);
-        break;
-    case R.id.rb_shoping:
-        viewPagers.setCurrentItem(2);
-        break;
-    case R.id.rb_look:
-        viewPagers.setCurrentItem(3);
+            switch (checkedId) {
+                case R.id.rb_home:
+                    viewPagers.setCurrentItem(0,false);
+                    break;
+                case R.id.rg_news:
+                    viewPagers.setCurrentItem(1,false);
+                    break;
+                case R.id.rb_shoping:
+                    viewPagers.setCurrentItem(2,false);
+                    break;
+                case R.id.rb_look:
+                    viewPagers.setCurrentItem(3,false);
 
-        break;
-    case R.id.rb_setting:
-        viewPagers.setCurrentItem(4);
-        break;
-}
+                    break;
+                case R.id.rb_setting:
+                    viewPagers.setCurrentItem(4,false);
+                    break;
+            }
         }
     }
 
 
-
-
-
-    class ViewPagerAdapter extends PagerAdapter{
+    class ViewPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
@@ -93,10 +90,9 @@ switch (checkedId){
         }
 
 
-
         @Override
         public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-            return  view == o;
+            return view == o;
         }
 
         @Override
