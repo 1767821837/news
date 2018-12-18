@@ -93,6 +93,5 @@ public class Mainactivity extends SlidingFragmentActivity {
             }
         }
         return super.onKeyUp(keyCode, event);
-
     }
 }
