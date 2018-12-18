@@ -6,7 +6,8 @@
     android:background="#ffffff"
     android:orientation="vertical"
     tools:context="com.song.anew.activity.MainActivity1">
-
+    <include layout="@layout/basepare"
+        android:id="@+id/il_basepare"/>
     <com.song.anew.view.SimpleViewpagerIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"

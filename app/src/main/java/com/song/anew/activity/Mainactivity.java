@@ -14,8 +14,6 @@ import com.song.anew.util.DensityUtil;
 
 public class Mainactivity extends SlidingFragmentActivity {
 
-    ViewPager viewPager;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +61,7 @@ public class Mainactivity extends SlidingFragmentActivity {
     }
 
     public ContentFragment getContentFragment() {
+
         return (ContentFragment) getSupportFragmentManager().findFragmentByTag("fl_main_content");
     }
 

@@ -2,6 +2,7 @@ package com.song.anew.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class GuideActivity extends AppCompatActivity {
     private ImageView iv_red_point;
     private int leftmax;
     private int widths;
+    String[] pageTitles = {"北京", "中国", "国际", "文娱", "体育", "生活", "旅游", "科技", "军事", "财经", "女性", "倍儿逗"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +166,7 @@ public class GuideActivity extends AppCompatActivity {
 //            return  position;
             return imageView;
         }
+
 
         /**
          * 销毁 页面
