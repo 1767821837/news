@@ -24,13 +24,16 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:src="@drawable/t7" />
+            android:src="@mipmap/icon"
+             />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:orientation="vertical">
 
         <EditText
@@ -52,12 +55,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="验证码" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="login"
             android:layout_marginTop="30dp"
-            android:text="登录"/>
+            android:onClick="login"
+            android:text="登录" />
     </LinearLayout>
 
 </LinearLayout>

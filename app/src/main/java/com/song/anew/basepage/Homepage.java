@@ -16,9 +16,6 @@ import org.xutils.x;
 
 public class Homepage extends BasePage {
     public Homepage(Context context) {
-
-
-
         super(context);
     }
 
@@ -29,7 +26,6 @@ public class Homepage extends BasePage {
         viewPager.setVisibility(View.VISIBLE);
         indicator.setVisibility(View.VISIBLE);
         getDataFromNet();
-
     }
 
 
