@@ -3,6 +3,7 @@ package com.song.anew.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,17 +17,11 @@ import butterknife.OnClick;
 
 public class loginActivity extends AppCompatActivity {
 
-    @BindView(R.id.tv_register)
     TextView tvRegister;
-    @BindView(R.id.et_user)
     EditText etUser;
-    @BindView(R.id.et_psd)
     EditText etPsd;
-    @BindView(R.id.et_tel)
     EditText etTel;
-    @BindView(R.id.et_code)
     EditText etCode;
-    @BindView(R.id.btn_login)
     Button btnLogin;
 
     @Override
@@ -34,28 +29,38 @@ public class loginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+
+        initView();
+        initlisten();
     }
 
-    public void login(View view) {
-        startActivity(new Intent(this, Mainactivity.class));
-    }
-
-    @OnClick({R.id.tv_register, R.id.btn_login})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_register:
-                Intent intent = new Intent();
+    private void initlisten() {
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(loginActivity.this,RegisterActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.btn_login:
+            }
+        });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(loginActivity.this,Mainactivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
+    private void initView() {
 
+        tvRegister = findViewById(R.id.tv_register);
+        etUser = findViewById(R.id.et_user);
+        etPsd = findViewById(R.id.et_psd);
+        etTel = findViewById(R.id.et_tel);
+        etCode = findViewById(R.id.et_code);
+        btnLogin = findViewById(R.id.btn_login);
 
-
-                Intent intent1 = new Intent(this,Mainactivity.class);
-                startActivity(intent1);
-                break;
-        }
     }
 }
+
+
