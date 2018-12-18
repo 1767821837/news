@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 /**
  * 公共类
+ *
  */
 public class BasePage {
     public  Context context;
