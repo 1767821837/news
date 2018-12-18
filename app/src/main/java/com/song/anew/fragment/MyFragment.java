@@ -13,51 +13,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.song.anew.R;
+
 
 @SuppressLint("ValidFragment")
 public class MyFragment extends Fragment {
 
     private final String title;
-    private final String content;
-    private Context context;
-    private TextView textView;
+    private final int layout;
 
     public String getTitle() {
         return title;
     }
 
-    public String getContent() {
-        return content;
+    public int getLayout() {
+        return layout;
     }
 
     @SuppressLint("ValidFragment")
-    public MyFragment(String title, String content) {
+    public MyFragment(String title, int layout) {
         super();
         this.title = title;
-        this.content = content;
+        this.layout = layout;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getContext();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        textView = new TextView(context);
-        textView.setTextColor(Color.RED);
-        textView.setTextSize(30);
-        textView.setGravity(Gravity.CENTER);
-        textView.setBackgroundColor(Color.BLUE);
-        //View inflate = inflater.inflate(R.layout.itemlayout, null);
-        return textView;
+        View inflate = inflater.inflate(layout, null);
+        return inflate;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        textView.setText(content);
     }
 }

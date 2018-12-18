@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.design.widget.TabLayout;
 
 import com.song.anew.BasePage;
+import com.song.anew.R;
 import com.song.anew.activity.Mainactivity;
 import com.song.anew.adapter.ViewpagerAdapter;
 import com.song.anew.fragment.MyFragment;
@@ -17,8 +18,8 @@ public class Homepage extends BasePage {
 
     public Homepage(Context context) {
         super(context);
-        arrayList.add(new MyFragment("标题1", "内容1"));
-        arrayList.add(new MyFragment("标题2", "内容2"));
+        arrayList.add(new MyFragment("标题1", R.layout.index_layout));
+        arrayList.add(new MyFragment("标题2", R.layout.index_layout));
     }
 
     @Override
@@ -27,7 +28,6 @@ public class Homepage extends BasePage {
 
         adapter = new ViewpagerAdapter(((Mainactivity) context).getfragmentmanager(), arrayList);
         viewPager.setAdapter(adapter);
-
 
         tablayout.setupWithViewPager(viewPager);
         tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
