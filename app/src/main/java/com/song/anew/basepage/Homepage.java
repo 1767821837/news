@@ -20,6 +20,10 @@ public class Homepage extends BasePage {
         super(context);
         arrayList.add(new MyFragment("标题1", R.layout.index_layout));
         arrayList.add(new MyFragment("标题2", R.layout.index_layout));
+        arrayList.add(new MyFragment("标题3", R.layout.index_layout));
+        arrayList.add(new MyFragment("标题4", R.layout.index_layout));
+        arrayList.add(new MyFragment("标题5", R.layout.index_layout));
+        arrayList.add(new MyFragment("标题6", R.layout.index_layout));
     }
 
     @Override
