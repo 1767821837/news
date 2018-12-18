@@ -1,5 +1,6 @@
 package com.song.anew.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
@@ -67,6 +68,14 @@ public class Mainactivity extends SlidingFragmentActivity {
 
         return (ContentFragment) getSupportFragmentManager().findFragmentByTag("fl_main_content");
     }
+  public void setNohua(int i){
+        if(i==0) {
+            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
+        else {
+            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        }
+  }
 
     public FragmentManager getfragmentmanager() {
         return getSupportFragmentManager();

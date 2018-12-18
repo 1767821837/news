@@ -2,6 +2,7 @@ package com.song.anew.basepage;
 
 import android.content.Context;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 
 import com.song.anew.BasePage;
 import com.song.anew.R;
@@ -30,10 +31,34 @@ public class Homepage extends BasePage {
     public void initData() {
         super.initData();
 
-        adapter = new ViewpagerAdapter(((Mainactivity) context).getfragmentmanager(), arrayList);
+        adapter = new ViewpagerAdapter(((Mainactivity) context).getfragmentmanager(), arrayList ,context);
         viewPager.setAdapter(adapter);
-
+viewPager.addOnPageChangeListener(new mypagechange());
         tablayout.setupWithViewPager(viewPager);
         tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
+
+    class mypagechange implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int i, float v, int i1) {
+            if(i!=0){
+                Mainactivity mainactivity = (Mainactivity) context;
+                mainactivity.setNohua(0);
+            }else {
+                Mainactivity mainactivity = (Mainactivity) context;
+                mainactivity.setNohua(1);
+            }
+        }
+
+        @Override
+        public void onPageSelected(int i) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int i) {
+
+        }
+    }
+
 }
