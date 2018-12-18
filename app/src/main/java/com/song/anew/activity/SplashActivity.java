@@ -28,7 +28,6 @@ public class SplashActivity extends AppCompatActivity {
 
         lv = findViewById(R.id.lv_splash);
         initanm();
-
     }
 
     private void initanm() {
