@@ -39,7 +39,7 @@ but_back.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         Mainactivity mainActivity = (Mainactivity) context;
-        mainActivity.getSlidingMenu().toggle();//关<->开
+        mainActivity.getSlidingMenu().toggle();
     }
 });
 

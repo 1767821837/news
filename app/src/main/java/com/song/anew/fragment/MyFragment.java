@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.song.anew.activity.Mainactivity;
 @SuppressLint("ValidFragment")
 public class MyFragment extends Fragment {
 
+    public static final String TAG ="*********";
     private final String title;
     private final int layout;
 
@@ -56,16 +58,27 @@ public class MyFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        Mainactivity mainactivity = (Mainactivity) getActivity();
-        mainactivity.setNohua(1);
-        super.onPause();
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG,"onStart");
     }
 
     @Override
-    public void onStart() {
-        Mainactivity mainactivity = (Mainactivity) getActivity();
-        mainactivity.setNohua(0);
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG,"onResume");
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG,"onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG,"onStop");
+    }
+
 }
