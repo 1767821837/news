@@ -19,7 +19,7 @@ public class Homepage extends BasePage {
 
     public Homepage(Context context) {
         super(context);
-        for (int i = 0; i <pageTitles.length ; i++) {
+        for (int i = 0; i < pageTitles.length; i++) {
             arrayList.add(new MyFragment(pageTitles[i], R.layout.index_layout));
         }
 
@@ -30,9 +30,9 @@ public class Homepage extends BasePage {
     public void initData() {
         super.initData();
 
-        adapter = new ViewpagerAdapter(((Mainactivity) context).getContentFragment().getChildFragmentManager(), arrayList ,context);
+        adapter = new ViewpagerAdapter(((Mainactivity) context).getContentFragment().getChildFragmentManager(), arrayList, context);
         viewPager.setAdapter(adapter);
-viewPager.addOnPageChangeListener(new mypagechange());
+        viewPager.addOnPageChangeListener(new mypagechange());
         tablayout.setupWithViewPager(viewPager);
         tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
@@ -40,10 +40,10 @@ viewPager.addOnPageChangeListener(new mypagechange());
     class mypagechange implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageScrolled(int i, float v, int i1) {
-            if(i!=0){
+            if (i != 0) {
                 Mainactivity mainactivity = (Mainactivity) context;
                 mainactivity.setNohua(0);
-            }else {
+            } else {
                 Mainactivity mainactivity = (Mainactivity) context;
                 mainactivity.setNohua(1);
             }
