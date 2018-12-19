@@ -39,11 +39,10 @@ public class ContentFragment extends BaseFragment {
         basePages = new ArrayList<BasePage>();
         basePages.add(new Homepage(context));
         basePages.add(new newspage(context));
-        basePages.add(new Shoppingpage(context));
         basePages.add(new lookpage(context));
         basePages.add(new Settingpage(context));
         viewPagers.setAdapter(new ViewPagerAdapter());
-        viewPagers.setOffscreenPageLimit(5);
+        viewPagers.setOffscreenPageLimit(4);
         return view;
     }
 
@@ -58,15 +57,12 @@ public class ContentFragment extends BaseFragment {
                 case R.id.rg_news:
                     viewPagers.setCurrentItem(1,false);
                     break;
-                case R.id.rb_shoping:
+
+                case R.id.rb_look:
                     viewPagers.setCurrentItem(2,false);
                     break;
-                case R.id.rb_look:
-                    viewPagers.setCurrentItem(3,false);
-
-                    break;
                 case R.id.rb_setting:
-                    viewPagers.setCurrentItem(4,false);
+                    viewPagers.setCurrentItem(3,false);
                     break;
             }
         }
@@ -105,7 +101,6 @@ public class ContentFragment extends BaseFragment {
     @Override
     public void initdata() {
         super.initdata();
-
         basePages.get(0).initData();
     }
 

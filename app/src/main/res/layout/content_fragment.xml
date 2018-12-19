@@ -32,11 +32,7 @@
                 style="@style/but_home"
                 android:text="新闻"
                 />
-            <RadioButton
-                android:id="@+id/rb_shoping"
-                style="@style/but_home"
-                android:text="购物"
-                />
+
             <RadioButton
                 android:id="@+id/rb_look"
                 style="@style/but_home"
