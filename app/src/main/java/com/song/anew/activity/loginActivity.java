@@ -48,7 +48,7 @@ public class loginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Intent intent = new Intent(loginActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
                 startActivity(intent);
 
             }
@@ -58,7 +58,7 @@ public class loginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = etUser.getText().toString();
                 String password = etPsd.getText().toString();
-                if(!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(password)){
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
                     User user = new User();
                     user.setName(name);
                     user.setPassword(password);
@@ -77,24 +77,26 @@ public class loginActivity extends AppCompatActivity {
 
                                     Gson gson = new Gson();
                                     User user = gson.fromJson(response, User.class);
-                                    Log.i("8888", "onResponse: " + user);
+                                    Log.i("8888","onResponse: " + user);
+                                    if (user == null) {
+                                        Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
                                     if (!TextUtils.isEmpty(user.getName())) {
                                         Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(loginActivity.this,Mainactivity.class);
+                                        Intent intent = new Intent(loginActivity.this, Mainactivity.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
 
                                         Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
-                                   return;
+                                        return;
                                     }
                                 }
                             });
-                }else{
-                    Toast.makeText(getApplicationContext(),"输入的内容不能为空",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "输入的内容不能为空", Toast.LENGTH_SHORT).show();
                 }
-
-
 
 
             }
