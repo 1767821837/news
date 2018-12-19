@@ -3,6 +3,8 @@ package com.song.anew.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.song.anew.Bean.User;
 import com.song.anew.R;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -23,6 +29,8 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 @ContentView(R.layout.activity_register)
 public class RegisterActivity extends AppCompatActivity {
@@ -55,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void getEvent(View view) {
         switch (view.getId()) {
             case R.id.tv_register:
-                Toast.makeText(this, "sfafsd", Toast.LENGTH_SHORT).show();
+                regist();
                 break;
             case R.id.regist_back:
                 finish();
@@ -64,6 +72,54 @@ public class RegisterActivity extends AppCompatActivity {
                 disabled();
                 break;
         }
+
+    }
+
+    private void regist() {
+        String name = etUser.getText().toString();
+        String password = etPsd.getText().toString();
+        String tel = etTel.getText().toString();
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(tel)) {
+
+            ////////验证码************************
+            if (true) {
+                User user = new User();
+                user.setName(name);
+                user.setPassword(password);
+                user.setTel(tel);
+                OkHttpUtils.postString()
+                        .url("http://134.175.154.154/new/api/news/regist")
+                        .content(new Gson().toJson(user))
+                        .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+
+                                Gson gson = new Gson();
+                                User user = gson.fromJson(response, User.class);
+                                Log.i("8888", "onResponse: " + user);
+                                if (!TextUtils.isEmpty(user.getName())) {
+                                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                                } else {
+
+                                }
+                                Toast.makeText(getApplicationContext(), "账号存在", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            } else {
+                Toast.makeText(getApplicationContext(), "验证码错误", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "输入内容不能为空", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
