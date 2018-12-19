@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<com.song.anew.view.CustomScrollViewPager
-    android:id="@+id/viewPager"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</com.song.anew.view.CustomScrollViewPager>
+    <com.song.anew.view.CustomScrollViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7">
+
+    </com.song.anew.view.CustomScrollViewPager>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:padding="3dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="#19ebe0"
-        >
+        android:orientation="horizontal">
+
         <RadioGroup
             android:id="@+id/rg_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
+
             <RadioButton
                 android:id="@+id/rb_home"
                 style="@style/but_home"
-                android:text="主页"
-                />
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/home"
+                android:text="主页" />
+
+
             <RadioButton
                 android:id="@+id/rg_news"
                 style="@style/but_home"
-                android:text="新闻"
-                />
+                android:text="新闻" />
 
             <RadioButton
                 android:id="@+id/rb_look"
                 style="@style/but_home"
-                android:text="查看"
-                />
+                android:text="查看" />
+
             <RadioButton
                 android:id="@+id/rb_setting"
                 style="@style/but_home"
-                android:text="设置"
-                />
+                android:text="设置" />
         </RadioGroup>
     </LinearLayout>
 

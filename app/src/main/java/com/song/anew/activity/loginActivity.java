@@ -1,5 +1,6 @@
 package com.song.anew.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
-public class loginActivity extends AppCompatActivity {
+public class loginActivity extends Activity {
 
     TextView tvRegister;
     EditText etUser;
@@ -38,8 +39,27 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         initView();
         initlisten();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==3&&requestCode==2){
+            String namePass = data.getStringExtra("namePass");
+            Toast.makeText(this, "1111111111111"+namePass, Toast.LENGTH_LONG).show();
+            String[] split = namePass.split("@");
+            etUser.setText(split[0]);
+            etPsd.setText(split[1]);
+        }else{
+            etUser.setText("");
+            etPsd.setText("");
+        }
+
+
     }
 
     private void initlisten() {
@@ -49,8 +69,8 @@ public class loginActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-
+                //startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +97,7 @@ public class loginActivity extends AppCompatActivity {
 
                                     Gson gson = new Gson();
                                     User user = gson.fromJson(response, User.class);
-                                    Log.i("8888","onResponse: " + user);
+                                    Log.i("8888", "onResponse: " + user);
                                     if (user == null) {
                                         Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
                                         return;
@@ -118,6 +138,8 @@ public class loginActivity extends AppCompatActivity {
 
 
     }
+
+
 }
 
 

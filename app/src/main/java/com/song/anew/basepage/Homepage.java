@@ -1,7 +1,6 @@
 package com.song.anew.basepage;
 
 import android.content.Context;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.song.anew.BasePage;

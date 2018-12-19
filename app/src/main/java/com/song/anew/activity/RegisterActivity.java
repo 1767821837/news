@@ -1,7 +1,10 @@
 package com.song.anew.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,11 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
 import com.song.anew.Bean.User;
 import com.song.anew.R;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -31,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.MediaType;
+import okhttp3.Response;
 
 @ContentView(R.layout.activity_register)
 public class RegisterActivity extends AppCompatActivity {
@@ -47,9 +54,16 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView registback;
     @ViewInject(R.id.tv_get_code)
     private TextView tvGetCode;
-    @ViewInject(R.id.tv_register)
-    private Button tvRegister;
+
     private int i;
+
+    private boolean flag = false;
+
+    private String username;
+    private String password;
+    private String phone;
+    private String code;
+    private String msgcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,24 +83,32 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.tv_get_code:
-                disabled();
+                getInfo();
+                if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(phone)) {
+                    getCode();
+                    disabled();
+                } else {
+                    Toast.makeText(this, "不能为空！！！", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
 
     }
 
     private void regist() {
-        String name = etUser.getText().toString();
-        String password = etPsd.getText().toString();
-        String tel = etTel.getText().toString();
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(tel)) {
-
+        getInfo();
+        if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(code)) {
             ////////验证码************************
-            if (true) {
+
+            if (msgcode.equals(code)) {
+                flag = true;
+            }
+
+            if (flag) {
                 User user = new User();
-                user.setName(name);
+                user.setName(username);
                 user.setPassword(password);
-                user.setTel(tel);
+                user.setTel(phone);
                 OkHttpUtils.postString()
                         .url("http://134.175.154.154/new/api/news/regist")
                         .content(new Gson().toJson(user))
@@ -106,10 +128,16 @@ public class RegisterActivity extends AppCompatActivity {
                                 Log.i("8888", "onResponse: " + user);
                                 if (!TextUtils.isEmpty(user.getName())) {
                                     Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
-                                } else {
 
+                                    int resultcode = 3;
+                                    Intent data = new Intent();
+                                    String result = username + "@" + password;
+                                    data.putExtra("namePass", result);
+                                    setResult(resultcode, data);
+                                    finish();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "账号存在", Toast.LENGTH_SHORT).show();
                                 }
-                                Toast.makeText(getApplicationContext(), "账号存在", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -167,4 +195,35 @@ public class RegisterActivity extends AppCompatActivity {
         }, i * 1000);
     }
 
+
+    private void getCode() {
+        msgcode = "" + (int) ((Math.random()) * 1000000);
+        //Toast.makeText(this, ""+msgcode, Toast.LENGTH_SHORT).show();
+        final String ss = "2";
+        OkGo.post("http://v.juhe.cn/sms/send")
+                .params("mobile", phone)
+                .params("tpl_id", "116524")
+                .params("key", "4159ebdf6b366bbf5fdbae6472c216b2")
+                .params("tpl_value", "%23code%23%3D" + msgcode)
+                .execute(new com.lzy.okgo.callback.StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            JSONObject jo = new JSONObject(s);
+                            if ((jo.getInt("error_code") + "").equals("0")) {
+                                Toast.makeText(getApplicationContext(), "验证码发送成功！！！", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void getInfo() {
+        username = etUser.getText().toString();
+        password = etPsd.getText().toString();
+        phone = etTel.getText().toString();
+        code = etCode.getText().toString();
+    }
 }

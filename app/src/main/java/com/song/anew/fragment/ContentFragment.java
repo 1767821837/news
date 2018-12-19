@@ -2,6 +2,7 @@ package com.song.anew.fragment;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
@@ -52,16 +53,19 @@ public class ContentFragment extends BaseFragment {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
                 case R.id.rb_home:
+                    Log.e("tyh", "onCheckedChanged: 1");
                     viewPagers.setCurrentItem(0,false);
                     break;
                 case R.id.rg_news:
+                    Log.e("tyh", "onCheckedChanged: 2");
                     viewPagers.setCurrentItem(1,false);
                     break;
-
                 case R.id.rb_look:
+                    Log.e("tyh", "onCheckedChanged: 3");
                     viewPagers.setCurrentItem(2,false);
                     break;
                 case R.id.rb_setting:
+                    Log.e("tyh", "onCheckedChanged: 4");
                     viewPagers.setCurrentItem(3,false);
                     break;
             }

@@ -25,10 +25,6 @@ public class ViewpagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-
-
-
-
         return arrayList.get(i);
     }
 
