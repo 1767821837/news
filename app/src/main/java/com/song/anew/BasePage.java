@@ -11,7 +11,6 @@ import com.song.anew.activity.Mainactivity;
 
 /**
  * 公共类
- *
  */
 public class BasePage {
     public Context context;
@@ -34,14 +33,14 @@ public class BasePage {
         tv_title = view.findViewById(R.id.tv_title);
         viewPager = view.findViewById(R.id.viewpager);
         //indicator = view.findViewById(R.id.indicator);
-        tablayout=view.findViewById(R.id.tablayout);
-but_back.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Mainactivity mainActivity = (Mainactivity) context;
-        mainActivity.getSlidingMenu().toggle();
-    }
-});
+        tablayout = view.findViewById(R.id.tablayout);
+        but_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Mainactivity mainActivity = (Mainactivity) context;
+                mainActivity.getSlidingMenu().toggle();
+            }
+        });
 
         return view;
     }

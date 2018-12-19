@@ -22,14 +22,11 @@ public class Homepage extends BasePage {
         for (int i = 0; i < pageTitles.length; i++) {
             arrayList.add(new MyFragment(pageTitles[i], R.layout.index_layout));
         }
-
-
     }
 
     @Override
     public void initData() {
         super.initData();
-
         adapter = new ViewpagerAdapter(((Mainactivity) context).getContentFragment().getChildFragmentManager(), arrayList, context);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new mypagechange());
