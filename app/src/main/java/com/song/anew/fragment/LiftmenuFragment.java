@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.song.anew.BaseFragment;
 import com.song.anew.Bean.HomePageBean;
+import com.song.anew.R;
 
 import java.util.List;
 
@@ -13,21 +14,18 @@ import java.util.List;
  * 左侧菜单
  */
 public class LiftmenuFragment extends BaseFragment {
-    private TextView textView;
+
 private List<HomePageBean.DataBean> data;
     @Override
     public View initview() {
-        textView = new TextView(context);
-
-        textView.setTextSize(25);
-        textView.setTextColor(Color.RED);
-        return textView;
+      View view = View.inflate(context, R.layout.leftmenu_item,null);
+        return view;
     }
 
     @Override
     public void initdata() {
         super.initdata();
-        textView.setText("asdfasdfasd");
+
     }
 
     public void setData(List<HomePageBean.DataBean> data) {

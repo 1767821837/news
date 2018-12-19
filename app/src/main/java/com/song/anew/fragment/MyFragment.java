@@ -49,6 +49,8 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(layout, null);
+        TextView tv = inflate.findViewById(R.id.tv);
+        tv.setText(title);
         return inflate;
     }
 
