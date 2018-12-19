@@ -2,6 +2,7 @@ package com.song.anew.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -84,7 +85,10 @@ public class MyFragment extends Fragment {
         banner = header.findViewById(R.id.banner);
         banner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height/4));
         listView=inflate.findViewById(R.id.listView);
-
+        listView.setCacheColorHint(Color.TRANSPARENT);
+        listView.setDividerHeight(0);//设置分割线高度为0
+        //设置按下listView的item不变色
+        listView.setSelector(android.R.color.transparent);
 
 
         Refresh();//刷新
