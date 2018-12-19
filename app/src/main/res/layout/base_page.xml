@@ -2,24 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include
         android:id="@+id/il_basepare"
         layout="@layout/basepare" />
 
-    <android.support.design.widget.TabLayout
+    <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@android:color/holo_blue_bright"
+        android:background="#fff"
+        app:tl_textSelectColor="#000"
+        app:tl_textUnselectColor="#666"
+        app:tl_indicator_color="#e4e4e4"
+        app:tl_indicator_corner_radius="5dp"
+        app:tl_indicator_margin_left="2dp"
+        app:tl_indicator_margin_right="2dp"
+        app:tl_indicator_style="BLOCK"
         >
-    </android.support.design.widget.TabLayout>
+    </com.flyco.tablayout.SlidingTabLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f0f0f0"
+        android:background="#fff"
         />
 </LinearLayout>

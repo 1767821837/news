@@ -30,8 +30,10 @@ public class Homepage extends BasePage {
         adapter = new ViewpagerAdapter(((Mainactivity) context).getContentFragment().getChildFragmentManager(), arrayList, context);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new mypagechange());
-        tablayout.setupWithViewPager(viewPager);
-        tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+
+        tablayout.setViewPager(viewPager,pageTitles);
+        //tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     class mypagechange implements ViewPager.OnPageChangeListener {

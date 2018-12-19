@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.song.anew.activity.Mainactivity;
 
 /**
@@ -18,7 +19,7 @@ public class BasePage {
     public Button but_back;
     public TextView tv_title;
     public ViewPager viewPager;
-    public TabLayout tablayout;
+    public SlidingTabLayout tablayout;
     public com.song.anew.view.SimpleViewpagerIndicator indicator;
 
 
