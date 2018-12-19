@@ -1,21 +1,21 @@
 package com.song.anew.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
+import com.song.anew.adapter.*;
+import com.song.anew.Bean.MessageBean;
 import com.song.anew.R;
-import com.song.anew.activity.Mainactivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @SuppressLint("ValidFragment")
@@ -24,6 +24,11 @@ public class MyFragment extends Fragment {
     public static final String TAG ="*********";
     private final String title;
     private final int layout;
+
+
+    private RecyclerView recyclerView;
+    //private MessageAdapter adapter;
+    private List<MessageBean> list = new ArrayList<>();
 
     public String getTitle() {
         return title;
@@ -49,8 +54,9 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(layout, null);
-        TextView tv = inflate.findViewById(R.id.tv);
-        tv.setText(title);
+        //TextView tv = inflate.findViewById(R.id.tv);
+        //tv.setText(title);
+        setView(inflate);
         return inflate;
     }
 
@@ -83,4 +89,8 @@ public class MyFragment extends Fragment {
         Log.d(TAG,"onStop");
     }
 
+    public void setView(View view) {
+        recyclerView=view.findViewById(R.id.recyclerview);
+
+    }
 }
