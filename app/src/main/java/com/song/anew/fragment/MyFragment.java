@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,7 +50,16 @@ import okhttp3.Call;
 
 @SuppressLint("ValidFragment")
 public class MyFragment extends Fragment {
+Handler handler = new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        Log.i(TAG, "handleMessage: "+"我想要刷新banner");
+        if(msg.what==1){
+            banner.start();
 
+        }
+    }
+};
     public static final String TAG = "*********";
     private final String title;
     private final int layout;
@@ -60,6 +71,8 @@ public class MyFragment extends Fragment {
     private Banner banner;
     private SmartRefreshLayout mRefreshLayout;
     private MessageBean messageBeans;
+    private List<String> bannerList;
+    private List<String> arr;
 
     public String getTitle() {
         return title;
@@ -119,9 +132,9 @@ public class MyFragment extends Fragment {
 
 
         Refresh();//刷新
-        setBanner();
-        getInfos();
 
+        getInfos();
+        setBanner();
         return inflate;
     }
 
@@ -144,7 +157,7 @@ public class MyFragment extends Fragment {
     }
 
     private void setBanner() {
-        List<String> bannerList = new ArrayList<>();
+        bannerList = new ArrayList<>();
         bannerList.add("http://pic33.photophoto.cn/20141022/0019032438899352_b.jpg");
         bannerList.add("http://t1.mmonly.cc/uploads/allimg/tuku/1613554605-0.jpg");
         bannerList.add("http://imgsrc.baidu.com/imgad/pic/item/d0c8a786c9177f3edb843c207bcf3bc79f3d566f.jpg");
@@ -154,7 +167,7 @@ public class MyFragment extends Fragment {
         banner.setBannerAnimation(Transformer.DepthPage);
         banner.isAutoPlay(true);
         banner.setDelayTime(3000);
-        List<String> arr = new ArrayList<>();
+        arr = new ArrayList<>();
         arr.add("1111111111111");
         arr.add("2222222222222");
         arr.add("3333333333333");
@@ -190,9 +203,21 @@ public class MyFragment extends Fragment {
             public void run() {
         if (messageBeans != null) {
             Log.i(TAG, "MYFragment: "+messageBeans.getData().getNews().size());
-        for (int i = 0 ;i<messageBeans.getData().getNews().size();i++)
-                list.add(messageBeans.getData().getNews().get(i));
+            bannerList.clear();
+            bannerList.add(Constants.ROOTURL+messageBeans.getData().getNews().get(0).getListimage());
+            bannerList.add(Constants.ROOTURL+messageBeans.getData().getNews().get(1).getListimage());
+            bannerList.add(Constants.ROOTURL+messageBeans.getData().getNews().get(2).getListimage());
+            banner.setImageLoader(new GlideImageLoader());
+            arr.clear();
+            arr.add(messageBeans.getData().getNews().get(0).getTitle());
+            arr.add(messageBeans.getData().getNews().get(1).getTitle());
+            arr.add(messageBeans.getData().getNews().get(2).getTitle());
+            Message msg = new Message();
+            msg.what = 1;
+handler.sendMessage(msg);
 
+        for (int i = 3 ;i<messageBeans.getData().getNews().size();i++)
+                list.add(messageBeans.getData().getNews().get(i));
 
             timer.cancel();
         }
