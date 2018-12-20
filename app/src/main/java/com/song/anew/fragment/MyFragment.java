@@ -2,6 +2,7 @@ package com.song.anew.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +30,7 @@ import com.song.anew.Bean.HomePageBean;
 import com.song.anew.Bean.MessageBean;
 import com.song.anew.R;
 import com.song.anew.activity.Mainactivity;
+import com.song.anew.activity.WebActivity;
 import com.song.anew.adapter.GlideImageLoader;
 import com.song.anew.adapter.MessageAdapter;
 import com.song.anew.adapter.SampleAdapter;
@@ -238,7 +240,9 @@ Handler handler = new Handler(){
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(getContext(), WebActivity.class);
+                intent.putExtra("url", Constants.ROOTURL + messageBeans.getData().getNews().get(position + 2).getUrl());
+                startActivity(intent);
             }
         });
     }
@@ -276,7 +280,9 @@ handler.sendMessage(msg);
     class MyOnBannerListener implements OnBannerListener {
         @Override
         public void OnBannerClick(int position) {
-
+            Intent intent = new Intent(getContext(), WebActivity.class);
+            intent.putExtra("url", Constants.ROOTURL + messageBeans.getData().getNews().get(position).getUrl());
+            startActivity(intent);
         }
     }
 
