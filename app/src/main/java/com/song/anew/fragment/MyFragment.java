@@ -206,6 +206,7 @@ Handler handler = new Handler(){
         bannerList.add("");
         bannerList.add("");
         bannerList.add("");
+
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(bannerList);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
