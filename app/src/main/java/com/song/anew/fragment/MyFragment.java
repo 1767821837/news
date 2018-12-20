@@ -22,8 +22,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.song.anew.Bean.HomePageBean;
 import com.song.anew.Bean.MessageBean;
 import com.song.anew.R;
+import com.song.anew.activity.Mainactivity;
 import com.song.anew.adapter.GlideImageLoader;
 import com.song.anew.adapter.MessageAdapter;
 import com.song.anew.adapter.SampleAdapter;
@@ -46,9 +48,11 @@ public class MyFragment extends Fragment {
 
     private ListView listView;
     private MessageAdapter adapter;
+    private List<HomePageBean.DataBean.ChildrenBean> childrenBeans;
     private List<MessageBean> list = new ArrayList<>();
     private Banner banner;
     private SmartRefreshLayout mRefreshLayout;
+
     public String getTitle() {
         return title;
     }
@@ -62,6 +66,7 @@ public class MyFragment extends Fragment {
         super();
         this.title = title;
         this.layout = layout;
+
     }
 
     @Override
@@ -78,13 +83,11 @@ public class MyFragment extends Fragment {
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
         int height = dm.heightPixels;//获取屏幕高度
-
-
         mRefreshLayout = inflate.findViewById(R.id.refreshLayout);
         View header = LayoutInflater.from(getContext()).inflate(R.layout.header, null);
         banner = header.findViewById(R.id.banner);
-        banner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height/4));
-        listView=inflate.findViewById(R.id.listView);
+        banner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height / 4));
+        listView = inflate.findViewById(R.id.listView);
         listView.setCacheColorHint(Color.TRANSPARENT);
         listView.setDividerHeight(0);//设置分割线高度为0
         //设置按下listView的item不变色
@@ -181,8 +184,8 @@ public class MyFragment extends Fragment {
 
     private void getInfos() {
         list.clear();
-        for(int i = 0;i<=30;i++){
-            list.add(new MessageBean("author_name"+i, "category"+i, "date"+i, "thumbnail_pic_s"+i, "title"+i, "uniquekey"+i, "url"+i));
+        for (int i = 0; i <= 30; i++) {
+            list.add(new MessageBean("author_name" + i, "category" + i, "date" + i, "thumbnail_pic_s" + i, "title" + i, "uniquekey" + i, "url" + i));
         }
         initRv();
     }

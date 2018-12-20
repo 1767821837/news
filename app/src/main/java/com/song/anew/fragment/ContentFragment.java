@@ -41,7 +41,6 @@ public class ContentFragment extends BaseFragment {
         basePages.add(new Homepage(context));
         basePages.add(new newspage(context));
         basePages.add(new lookpage(context));
-        basePages.add(new Settingpage(context));
         viewPagers.setAdapter(new ViewPagerAdapter());
         viewPagers.setOffscreenPageLimit(4);
         return view;

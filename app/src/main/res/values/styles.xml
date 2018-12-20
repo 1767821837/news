@@ -11,21 +11,13 @@
 </style>
 
 
-    android:layout_width="wrap_content"
-    android:background="@null"
-    android:layout_height="wrap_content"
-    android:text="asdfa"
-    android:textSize="20dp"
-    android:textColor="#2d2b2b"
-    android:button="@null"
-
     <style name="but_home" >
         <!-- Customize your theme here. -->
 
         <item name="android:layout_width">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:textColor">@drawable/btn_home</item>
         <item name="android:button">@null</item>
         <item name="android:layout_weight">1</item>

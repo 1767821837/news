@@ -29,6 +29,7 @@ public class Mainactivity extends SlidingFragmentActivity {
     }
 
     private void initwidgetid() {
+
     }
 
     private void initfragment() {
