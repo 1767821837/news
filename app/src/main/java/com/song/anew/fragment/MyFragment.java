@@ -143,6 +143,10 @@ Handler handler = new Handler(){
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mRefreshLayout.finishRefresh();
+
+
+
+
                 Toast.makeText(getContext(), "刷新成功", Toast.LENGTH_SHORT).show();
             }
         });
@@ -158,9 +162,9 @@ Handler handler = new Handler(){
 
     private void setBanner() {
         bannerList = new ArrayList<>();
-        bannerList.add("http://pic33.photophoto.cn/20141022/0019032438899352_b.jpg");
-        bannerList.add("http://t1.mmonly.cc/uploads/allimg/tuku/1613554605-0.jpg");
-        bannerList.add("http://imgsrc.baidu.com/imgad/pic/item/d0c8a786c9177f3edb843c207bcf3bc79f3d566f.jpg");
+        bannerList.add("");
+        bannerList.add("");
+        bannerList.add("");
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(bannerList);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
@@ -168,9 +172,9 @@ Handler handler = new Handler(){
         banner.isAutoPlay(true);
         banner.setDelayTime(3000);
         arr = new ArrayList<>();
-        arr.add("1111111111111");
-        arr.add("2222222222222");
-        arr.add("3333333333333");
+        arr.add("");
+        arr.add("");
+        arr.add("");
         banner.setBannerTitles(arr);
         banner.setIndicatorGravity(BannerConfig.CENTER);
         banner.setOnBannerListener(new MyOnBannerListener());
@@ -241,8 +245,6 @@ handler.sendMessage(msg);
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-
-
                     }
 
                     @Override
