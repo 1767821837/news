@@ -54,7 +54,7 @@ initnewData();
         //tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
-    private void initnewData() {
+    private void initnewData()  {
 
     }
 
