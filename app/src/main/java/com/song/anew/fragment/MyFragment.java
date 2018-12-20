@@ -188,6 +188,7 @@ Handler handler = new Handler(){
                                 getInfos();
                                 Message mes = new Message();
                                 mes.what = 2;
+
                                 handler.sendMessage(mes);
 
                             }
