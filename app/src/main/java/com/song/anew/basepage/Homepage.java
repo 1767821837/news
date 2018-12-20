@@ -37,7 +37,7 @@ public class Homepage extends BasePage {
         super(context);
 
         for (int i = 0; i < pageTitles.length; i++) {
-            arrayList.add(new MyFragment(pageTitles[i], R.layout.index_layout,i,context));
+            arrayList.add(new MyFragment(pageTitles[i], R.layout.index_layout, i, context));
         }
     }
 
@@ -49,8 +49,8 @@ public class Homepage extends BasePage {
         viewPager.addOnPageChangeListener(new mypagechange());
         viewPager.setOffscreenPageLimit(5);
 
-        tablayout.setViewPager(viewPager,pageTitles);
-initnewData();
+        tablayout.setViewPager(viewPager, pageTitles);
+        initnewData();
         //tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
