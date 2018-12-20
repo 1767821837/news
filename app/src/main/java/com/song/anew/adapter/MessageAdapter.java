@@ -18,7 +18,7 @@ public class MessageAdapter extends BaseQuickAdapter<MessageBean, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, MessageBean item) {
         //Log.e(TAG, "onSuccess: dsafsdfa" );
-        helper.setText(R.id.title, item.getTitle());
-        helper.setText(R.id.date, item.getDate());
+        helper.setText(R.id.title, "测试");
+        helper.setText(R.id.date, "阿斯顿发送到");
     }
 }

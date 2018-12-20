@@ -1,31 +1,62 @@
 package com.song.anew.activity;
-
-import android.content.Context;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.song.anew.Bean.HomePageBean;
 import com.song.anew.R;
 import com.song.anew.fragment.ContentFragment;
 import com.song.anew.fragment.LiftmenuFragment;
+import com.song.anew.util.Constants;
 import com.song.anew.util.DensityUtil;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import okhttp3.Call;
 
 public class Mainactivity extends SlidingFragmentActivity {
     private long firstTime = 0;
+    public HomePageBean homePageBean;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainactivity);
+        initnewsData();
         initwidgetid();
         initslidingmenu();
         initfragment();
 
+    }
+
+    private void initnewsData() {
+        homePageBean = new HomePageBean();
+        OkHttpUtils.get()
+                .url(Constants.HOME_PAGE_URL)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        homePageBean = new Gson().fromJson(response, HomePageBean.class);
+                        for (int i = 0; i <homePageBean.getData().get(0).getChildren().size() ; i++) {
+                            Log.i("********", "onResponse: " + homePageBean.getData().get(0).getChildren().get(i).getTitle());
+//                            Log.i("********", "onResponse: " + homePageBean.getData().get(0).getChildren().get(2).getTitle());
+//                            Log.i("********", "onResponse: " + homePageBean.getData().get(0).getChildren().size());
+                        }
+
+
+                    }
+                });
     }
 
     private void initwidgetid() {
@@ -102,6 +133,12 @@ public class Mainactivity extends SlidingFragmentActivity {
                 finish();
             }
         }
+
         return super.onKeyUp(keyCode, event);
+    }
+
+    public HomePageBean getHomePageBean(){
+
+     return homePageBean;
     }
 }

@@ -56,21 +56,7 @@ public class BasePage {
 
     public void initData() {
 //  联网获取数据
-        OkHttpUtils.get()
-                .url(Constants.HOME_PAGE_URL)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
 
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        homePageBean = new Gson().fromJson(response,HomePageBean.class);
-
-                    }
-                });
     }
 
 }

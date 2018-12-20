@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -29,13 +30,20 @@ import com.song.anew.activity.Mainactivity;
 import com.song.anew.adapter.GlideImageLoader;
 import com.song.anew.adapter.MessageAdapter;
 import com.song.anew.adapter.SampleAdapter;
+import com.song.anew.util.Constants;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import okhttp3.Call;
 
 
 @SuppressLint("ValidFragment")
@@ -44,11 +52,10 @@ public class MyFragment extends Fragment {
     public static final String TAG = "*********";
     private final String title;
     private final int layout;
-
-
+    private final Context context;
     private ListView listView;
     private MessageAdapter adapter;
-    private List<HomePageBean.DataBean.ChildrenBean> childrenBeans;
+    private HomePageBean.DataBean.ChildrenBean childrenBeans;
     private List<MessageBean> list = new ArrayList<>();
     private Banner banner;
     private SmartRefreshLayout mRefreshLayout;
@@ -62,11 +69,27 @@ public class MyFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public MyFragment(String title, int layout) {
+    public MyFragment(String title, int layout, final int position, final Context context) {
         super();
         this.title = title;
         this.layout = layout;
+        this.context = context;
 
+
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Mainactivity mainactivity = (Mainactivity) context;
+                if(mainactivity.getHomePageBean()!=null){
+                    childrenBeans = mainactivity.getHomePageBean().getData().get(0).getChildren().get(position);
+                    Log.i(TAG, "run: "+childrenBeans.getUrl());
+                    timer.cancel();
+                }
+                else {
+                    Log.i(TAG, "run: "+"我没有获取到数据");
+                }
+            }
+        }, 1000, 1000);
     }
 
     @Override
@@ -145,30 +168,6 @@ public class MyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
     private void initRv() {
 
         listView.addHeaderView(banner);
@@ -184,8 +183,9 @@ public class MyFragment extends Fragment {
 
     private void getInfos() {
         list.clear();
+        getMessageBean();
         for (int i = 0; i <= 30; i++) {
-            list.add(new MessageBean("author_name" + i, "category" + i, "date" + i, "thumbnail_pic_s" + i, "title" + i, "uniquekey" + i, "url" + i));
+            list.add(new MessageBean());
         }
         initRv();
     }
@@ -195,6 +195,30 @@ public class MyFragment extends Fragment {
         public void OnBannerClick(int position) {
 
         }
+    }
+
+
+    public MessageBean getMessageBean(){
+        final MessageBean[] messageBean = {new MessageBean()};
+        OkHttpUtils.get()
+                .url(Constants.NEW_PAGE_URL)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        messageBean[0] = new Gson().fromJson(response, MessageBean.class);
+
+                        Log.i(TAG, "onResponse: "+messageBean);
+
+                    }
+                });
+
+        return null;
     }
 }
 

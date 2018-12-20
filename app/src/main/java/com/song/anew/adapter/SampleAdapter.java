@@ -47,7 +47,7 @@ public class SampleAdapter extends BaseAdapter {
         TextView title=convertView.findViewById(R.id.title);
         TextView date=convertView.findViewById(R.id.date);
 
-        title.setText(list.get(position).getCategory());
+        title.setText("wodhi标题");
         date.setText("22222");
 
         return convertView;

@@ -181,19 +181,19 @@ public class RegisterActivity extends AppCompatActivity {
         }.start();
         Timer nTimer = new Timer();
         nTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tvGetCode.setClickable(true);
-                        //tvGetCode.setBackgroundColor(Color.argb(0, 255, 255, 255));
-                        tvGetCode.setTextColor(Color.argb(255, 254, 69, 66));
-                    }
-                });
-            }
-        }, i * 1000);
-    }
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvGetCode.setClickable(true);
+                    //tvGetCode.setBackgroundColor(Color.argb(0, 255, 255, 255));
+                    tvGetCode.setTextColor(Color.argb(255, 254, 69, 66));
+                }
+            });
+        }
+    }, i * 1000);
+}
 
 
     private void getCode() {
