@@ -57,6 +57,8 @@ Handler handler = new Handler(){
         if(msg.what==1){
             banner.start();
 
+        }else if(msg.what==2){
+            sampleAdapter.notifyDataSetChanged();
         }
     }
 };
@@ -73,6 +75,7 @@ Handler handler = new Handler(){
     private MessageBean messageBeans;
     private List<String> bannerList;
     private List<String> arr;
+    private SampleAdapter sampleAdapter;
 
     public String getTitle() {
         return title;
@@ -97,7 +100,7 @@ Handler handler = new Handler(){
                 if (mainactivity.getHomePageBean() != null) {
                     childrenBeans = mainactivity.getHomePageBean().getData().get(0).getChildren().get(position);
                     Log.i(TAG, "run: " + childrenBeans.getUrl());
-                    getMessageBean();
+                    getMessageBean(childrenBeans.getUrl());
                     timer.cancel();
                 } else {
                     Log.i(TAG, "run: " + "我没有获取到数据");
@@ -135,6 +138,7 @@ Handler handler = new Handler(){
 
         getInfos();
         setBanner();
+        initRv();
         return inflate;
     }
 
@@ -143,9 +147,26 @@ Handler handler = new Handler(){
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mRefreshLayout.finishRefresh();
+                list.clear();
+                OkHttpUtils.get()
+                        .url(Constants.ROOTURL + messageBeans.getData().getMore())
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                            }
+                            @Override
+                            public void onResponse(String response, int id) {
+                                final MessageBean[] messageBean = {new MessageBean()};
+                                messageBeans  = new Gson().fromJson(response, MessageBean.class);
+                                getInfos();
+                                Message mes = new Message();
+                                mes.what = 2;
+                                handler.sendMessage(mes);
 
-
-
+                            }
+                        });
+                mRefreshLayout.finishRefresh();
 
                 Toast.makeText(getContext(), "刷新成功", Toast.LENGTH_SHORT).show();
             }
@@ -153,6 +174,26 @@ Handler handler = new Handler(){
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                OkHttpUtils.get()
+                        .url(Constants.ROOTURL + messageBeans.getData().getMore())
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                            }
+                            @Override
+                            public void onResponse(String response, int id) {
+                                final MessageBean[] messageBean = {new MessageBean()};
+                                messageBeans  = new Gson().fromJson(response, MessageBean.class);
+                                getInfos();
+                                Message mes = new Message();
+                                mes.what = 2;
+                                handler.sendMessage(mes);
+
+                            }
+                        });
+
+
                 Toast.makeText(getContext(), "刷新成功", Toast.LENGTH_SHORT).show();
                 mRefreshLayout.finishLoadMore();
                 //refreshLayout.finishLoadMoreWithNoMoreData();//将不会再次触发加载更多事件
@@ -189,8 +230,9 @@ Handler handler = new Handler(){
     private void initRv() {
 
         listView.addHeaderView(banner);
-
-        listView.setAdapter(new SampleAdapter(list, getContext()));
+        this.sampleAdapter = new SampleAdapter(list, getContext());
+        SampleAdapter sampleAdapter = this.sampleAdapter;
+        listView.setAdapter(sampleAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -200,8 +242,8 @@ Handler handler = new Handler(){
     }
 
     private void getInfos() {
-        list.clear();
-        initRv();
+
+
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
@@ -237,7 +279,8 @@ handler.sendMessage(msg);
     }
 
 
-    public void getMessageBean() {
+    public void getMessageBean(String string) {
+        Log.i(TAG, "getMessageBean: "+string);
         final MessageBean[] messageBean = {new MessageBean()};
         OkHttpUtils.get()
                 .url(Constants.ROOTURL + childrenBeans.getUrl())
@@ -246,14 +289,13 @@ handler.sendMessage(msg);
                     @Override
                     public void onError(Call call, Exception e, int id) {
                     }
-
                     @Override
                     public void onResponse(String response, int id) {
-                        messageBean[0] = new Gson().fromJson(response, MessageBean.class);
-                        for (int i = 0; i < messageBean[0].getData().getNews().size(); i++) {
-                            Log.i(TAG, "onResponse: " + messageBean[0].getData().getNews().get(i).getTitle());
-                        }
 
+                        messageBean[0] = new Gson().fromJson(response, MessageBean.class);
+                     /*   for (int i = 0; i < messageBean[0].getData().getNews().size(); i++) {
+                            Log.i(TAG, "onResponse: " + messageBean[0].getData().getNews().get(i).getTitle());
+                        }*/
                         messageBeans = messageBean[0];
                     }
                 });

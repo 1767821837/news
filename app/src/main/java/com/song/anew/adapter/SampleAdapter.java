@@ -45,10 +45,11 @@ public class SampleAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = View.inflate(context, R.layout.item_message, null);
-        //TextView textView = convertView.findViewById(R.id.text);
-        //textView.setText(mDataSet[position]);
 
+        if (convertView == null) {
+            convertView = View.inflate(context, R.layout.item_message, null);
+
+        }
         TextView title=convertView.findViewById(R.id.title);
         TextView date=convertView.findViewById(R.id.date);
         ImageView iv = convertView.findViewById(R.id.iv_new);
