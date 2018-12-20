@@ -56,9 +56,10 @@ public class MyFragment extends Fragment {
     private ListView listView;
     private MessageAdapter adapter;
     private HomePageBean.DataBean.ChildrenBean childrenBeans;
-    private List<MessageBean> list = new ArrayList<>();
+    private List<MessageBean.DataBean.NewsBean> list = new ArrayList<>();
     private Banner banner;
     private SmartRefreshLayout mRefreshLayout;
+    private MessageBean messageBeans;
 
     public String getTitle() {
         return title;
@@ -80,13 +81,13 @@ public class MyFragment extends Fragment {
         timer.schedule(new TimerTask() {
             public void run() {
                 Mainactivity mainactivity = (Mainactivity) context;
-                if(mainactivity.getHomePageBean()!=null){
+                if (mainactivity.getHomePageBean() != null) {
                     childrenBeans = mainactivity.getHomePageBean().getData().get(0).getChildren().get(position);
-                    Log.i(TAG, "run: "+childrenBeans.getUrl());
+                    Log.i(TAG, "run: " + childrenBeans.getUrl());
+                    getMessageBean();
                     timer.cancel();
-                }
-                else {
-                    Log.i(TAG, "run: "+"我没有获取到数据");
+                } else {
+                    Log.i(TAG, "run: " + "我没有获取到数据");
                 }
             }
         }, 1000, 1000);
@@ -183,11 +184,20 @@ public class MyFragment extends Fragment {
 
     private void getInfos() {
         list.clear();
-        getMessageBean();
-        for (int i = 0; i <= 30; i++) {
-            list.add(new MessageBean());
-        }
         initRv();
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+        if (messageBeans != null) {
+            Log.i(TAG, "MYFragment: "+messageBeans.getData().getNews().size());
+        for (int i = 0 ;i<messageBeans.getData().getNews().size();i++)
+                list.add(messageBeans.getData().getNews().get(i));
+
+
+            timer.cancel();
+        }
+            }
+        }, 1000, 1000);
     }
 
     class MyOnBannerListener implements OnBannerListener {
@@ -198,27 +208,28 @@ public class MyFragment extends Fragment {
     }
 
 
-    public MessageBean getMessageBean(){
+    public void getMessageBean() {
         final MessageBean[] messageBean = {new MessageBean()};
         OkHttpUtils.get()
-                .url(Constants.NEW_PAGE_URL)
+                .url(Constants.ROOTURL + childrenBeans.getUrl())
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         messageBean[0] = new Gson().fromJson(response, MessageBean.class);
+                        for (int i = 0; i < messageBean[0].getData().getNews().size(); i++) {
+                            Log.i(TAG, "onResponse: " + messageBean[0].getData().getNews().get(i).getTitle());
+                        }
 
-                        Log.i(TAG, "onResponse: "+ messageBean);
-
+                        messageBeans = messageBean[0];
                     }
                 });
 
-        return null;
+
     }
 }
 

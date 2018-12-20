@@ -47,7 +47,7 @@ public class Homepage extends BasePage {
         adapter = new ViewpagerAdapter(((Mainactivity) context).getContentFragment().getChildFragmentManager(), arrayList, context);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new mypagechange());
-
+        viewPager.setOffscreenPageLimit(5);
 
         tablayout.setViewPager(viewPager,pageTitles);
 initnewData();
