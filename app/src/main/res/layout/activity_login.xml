@@ -71,7 +71,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:textColor="#000"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     android:hint="用户名或手机号" />
             </LinearLayout>
 
@@ -94,7 +94,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     android:inputType="textPassword"
                     android:hint="密码" />
             </LinearLayout>

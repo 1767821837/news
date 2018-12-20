@@ -14,7 +14,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:padding="3dp"
-        android:background="#19ebe0"
+        android:background="#eee"
         >
         <RadioGroup
             android:id="@+id/rg_main"
@@ -26,24 +26,28 @@
                 style="@style/but_home"
                 android:drawableTop="@drawable/home_press_img"
                 android:text="主页"
+                android:textColor="#666"
                 />
             <RadioButton
                 android:id="@+id/rg_news"
                 style="@style/but_home"
                 android:drawableTop="@drawable/govaffair_press_img"
                 android:text="新闻"
+                android:textColor="#666"
                 />
             <RadioButton
                 android:id="@+id/rb_look"
                 style="@style/but_home"
                 android:drawableTop="@drawable/lookpage_img"
                 android:text="查看"
+                android:textColor="#666"
                 />
             <RadioButton
                 android:id="@+id/rb_setting"
                 style="@style/but_home"
                 android:drawableTop="@drawable/setting_press_img"
                 android:text="设置"
+                android:textColor="#666"
                 />
         </RadioGroup>
     </LinearLayout>
