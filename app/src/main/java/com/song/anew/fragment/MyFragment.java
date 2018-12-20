@@ -213,7 +213,7 @@ public class MyFragment extends Fragment {
                     public void onResponse(String response, int id) {
                         messageBean[0] = new Gson().fromJson(response, MessageBean.class);
 
-                        Log.i(TAG, "onResponse: "+messageBean);
+                        Log.i(TAG, "onResponse: "+ messageBean);
 
                     }
                 });
