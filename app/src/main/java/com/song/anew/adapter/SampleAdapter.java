@@ -1,7 +1,6 @@
 package com.song.anew.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,7 +12,6 @@ import com.song.anew.Bean.MessageBean;
 import com.song.anew.R;
 import com.song.anew.util.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,7 +52,11 @@ public class SampleAdapter extends BaseAdapter {
         ImageView iv = convertView.findViewById(R.id.iv_new);
         title.setText(""+list.get(position).getTitle());
         date.setText(""+list.get(position).getPubdate());
-        Glide.with(context).load(Constants.ROOTURL+list.get(position).getListimage()).into(iv);
+        Glide.with(context)
+                .load(Constants.ROOTURL+list.get(position).getListimage())
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.loaderror)
+                .into(iv);
         return convertView;
     }
 
