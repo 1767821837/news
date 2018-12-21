@@ -131,6 +131,7 @@ public class MyFragment extends Fragment {
                     Log.i(TAG, "run: " + childrenBeans.getUrl());
                     getMessageBean(childrenBeans.getUrl());
                     timer.cancel();
+
                 } else {
                     Log.i(TAG, "run: " + "我没有获取到数据");
                 }
