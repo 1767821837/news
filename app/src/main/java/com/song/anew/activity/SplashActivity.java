@@ -37,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spalace);
         mhander = new Handler();
+        
         //StatusBarUtil.immersive(this, Color.argb(255, 252, 252, 252), 1);
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 252, 252, 252), true);
         lv = findViewById(R.id.lv_splash);
