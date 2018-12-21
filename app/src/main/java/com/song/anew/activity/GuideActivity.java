@@ -51,7 +51,7 @@ public class GuideActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Sputil.setBoolean(getApplicationContext(), ENTYHOMEKEY, true);
-                Intent intent = new Intent(getApplicationContext(), Mainactivity.class);
+                Intent intent = new Intent(getApplicationContext(), loginActivity.class);
                 startActivity(intent);
             }
         });

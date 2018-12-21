@@ -19,4 +19,16 @@ public class Sputil {
         edit.putBoolean(key,value);
         edit.commit();
     }
+
+    public static void setString(Context context, String key, String  value) {
+        sp = context.getSharedPreferences("cofig", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(key,value);
+        edit.commit();
+    }
+    public static String  getString(Context context, String key, String defau) {
+        sp = context.getSharedPreferences("cofig", Context.MODE_PRIVATE);
+
+        return sp.getString(key, defau);
+    }
 }

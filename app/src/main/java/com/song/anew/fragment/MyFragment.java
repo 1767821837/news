@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import com.song.anew.adapter.GlideImageLoader;
 import com.song.anew.adapter.MessageAdapter;
 import com.song.anew.adapter.SampleAdapter;
 import com.song.anew.util.Constants;
+import com.song.anew.util.Sputil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -52,7 +54,8 @@ import okhttp3.Call;
 
 @SuppressLint("ValidFragment")
 public class MyFragment extends Fragment {
-Handler handler = new Handler(){
+    private static final String NEWSIER = "NEWSIER" ;
+    Handler handler = new Handler(){
     @Override
     public void handleMessage(Message msg) {
         Log.i(TAG, "handleMessage: "+"我想要刷新banner");
@@ -61,6 +64,7 @@ Handler handler = new Handler(){
 
         }else if(msg.what==2){
             sampleAdapter.notifyDataSetChanged();
+            setonclick();
         }
     }
 };
@@ -93,6 +97,29 @@ Handler handler = new Handler(){
         this.title = title;
         this.layout = layout;
         this.context = context;
+        bannerList = new ArrayList<>();
+        arr = new ArrayList<>();
+        String newsitem =Sputil.getString(context,NEWSIER,"");
+        if(!TextUtils.isEmpty(newsitem)){
+            messageBeans  = new Gson().fromJson(newsitem, MessageBean.class);
+            bannerList.add(messageBeans.getData().getNews().get(0).getListimage());
+            bannerList.add(messageBeans.getData().getNews().get(1).getListimage());
+            bannerList.add(messageBeans.getData().getNews().get(2).getListimage());
+            arr.add(messageBeans.getData().getNews().get(0).getTitle());
+            arr.add(messageBeans.getData().getNews().get(1).getTitle());
+            arr.add(messageBeans.getData().getNews().get(2).getTitle());
+
+
+        }else{
+
+            bannerList.add("");
+            bannerList.add("");
+            bannerList.add("");
+            arr.add("");
+            arr.add("");
+            arr.add("");
+        }
+
 
 
         final Timer timer = new Timer();
@@ -159,6 +186,7 @@ Handler handler = new Handler(){
                             }
                             @Override
                             public void onResponse(String response, int id) {
+                                Sputil.setString(context,NEWSIER,response);
                                 final MessageBean[] messageBean = {new MessageBean()};
                                 messageBeans  = new Gson().fromJson(response, MessageBean.class);
                                 getInfos();
@@ -190,9 +218,8 @@ Handler handler = new Handler(){
                                 getInfos();
                                 Message mes = new Message();
                                 mes.what = 2;
-
                                 handler.sendMessage(mes);
-
+                                Log.i(TAG, "onResponse: "+list.size());
                             }
                         });
 
@@ -205,10 +232,6 @@ Handler handler = new Handler(){
     }
 
     private void setBanner() {
-        bannerList = new ArrayList<>();
-        bannerList.add("");
-        bannerList.add("");
-        bannerList.add("");
 
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(bannerList);
@@ -216,10 +239,8 @@ Handler handler = new Handler(){
         banner.setBannerAnimation(Transformer.DepthPage);
         banner.isAutoPlay(true);
         banner.setDelayTime(3000);
-        arr = new ArrayList<>();
-        arr.add("");
-        arr.add("");
-        arr.add("");
+
+
         banner.setBannerTitles(arr);
         banner.setIndicatorGravity(BannerConfig.CENTER);
         banner.setOnBannerListener(new MyOnBannerListener());
@@ -237,9 +258,15 @@ Handler handler = new Handler(){
         this.sampleAdapter = new SampleAdapter(list, getContext());
         SampleAdapter sampleAdapter = this.sampleAdapter;
         listView.setAdapter(sampleAdapter);
+        setonclick();
+
+    }
+
+    private void setonclick() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, "onItemClick: "+position+TAG);
                 Intent intent = new Intent(getContext(), WebActivity.class);
                 intent.putExtra("url", Constants.ROOTURL + messageBeans.getData().getNews().get(position + 2).getUrl());
                 startActivity(intent);
