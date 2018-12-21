@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -154,8 +155,9 @@ public class SplashActivity extends AppCompatActivity {
                 if (android.os.Build.VERSION.SDK_INT > 10) {  // 3.0以上
                     intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
                 } else {
-                    intent = new Intent();
-                    intent.setClassName("com.android.settings", "com.android.settings.WirelessSettings");
+
+                    intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+//                    intent.setClassName("com.android.settings", "com.android.settings.WirelessSettings");
                 }
                 SplashActivity.this.startActivityForResult(intent,10);
             }

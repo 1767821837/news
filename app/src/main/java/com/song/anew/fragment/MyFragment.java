@@ -10,10 +10,12 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -23,6 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -54,20 +57,20 @@ import okhttp3.Call;
 
 @SuppressLint("ValidFragment")
 public class MyFragment extends Fragment {
-    private static final String NEWSIER = "NEWSIER" ;
-    Handler handler = new Handler(){
-    @Override
-    public void handleMessage(Message msg) {
-        Log.i(TAG, "handleMessage: "+"我想要刷新banner");
-        if(msg.what==1){
-            banner.start();
+    private static final String NEWSIER = "NEWSIER";
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
 
-        }else if(msg.what==2){
-            sampleAdapter.notifyDataSetChanged();
-            setonclick();
+            if (msg.what == 1) {
+                banner.start();
+
+            } else if (msg.what == 2) {
+                sampleAdapter.notifyDataSetChanged();
+                setonclick();
+            }
         }
-    }
-};
+    };
     public static final String TAG = "*********";
     private final String title;
     private final int layout;
@@ -99,27 +102,13 @@ public class MyFragment extends Fragment {
         this.context = context;
         bannerList = new ArrayList<>();
         arr = new ArrayList<>();
-        String newsitem =Sputil.getString(context,NEWSIER,"");
-        if(!TextUtils.isEmpty(newsitem)){
-            messageBeans  = new Gson().fromJson(newsitem, MessageBean.class);
-            bannerList.add(messageBeans.getData().getNews().get(0).getListimage());
-            bannerList.add(messageBeans.getData().getNews().get(1).getListimage());
-            bannerList.add(messageBeans.getData().getNews().get(2).getListimage());
-            arr.add(messageBeans.getData().getNews().get(0).getTitle());
-            arr.add(messageBeans.getData().getNews().get(1).getTitle());
-            arr.add(messageBeans.getData().getNews().get(2).getTitle());
 
-
-        }else{
-
-            bannerList.add("");
-            bannerList.add("");
-            bannerList.add("");
-            arr.add("");
-            arr.add("");
-            arr.add("");
-        }
-
+        bannerList.add("");
+        bannerList.add("");
+        bannerList.add("");
+        arr.add("");
+        arr.add("");
+        arr.add("");
 
 
         final Timer timer = new Timer();
@@ -151,7 +140,7 @@ public class MyFragment extends Fragment {
         WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
-        int height = dm.widthPixels;//获取屏幕高度
+        int height = dm.heightPixels;//获取屏幕高度
         mRefreshLayout = inflate.findViewById(R.id.refreshLayout);
         View header = LayoutInflater.from(getContext()).inflate(R.layout.header, null);
         banner = header.findViewById(R.id.banner);
@@ -184,11 +173,12 @@ public class MyFragment extends Fragment {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                             }
+
                             @Override
                             public void onResponse(String response, int id) {
-                                Sputil.setString(context,NEWSIER,response);
+
                                 final MessageBean[] messageBean = {new MessageBean()};
-                                messageBeans  = new Gson().fromJson(response, MessageBean.class);
+                                messageBeans = new Gson().fromJson(response, MessageBean.class);
                                 getInfos();
                                 Message mes = new Message();
                                 mes.what = 2;
@@ -211,15 +201,19 @@ public class MyFragment extends Fragment {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                             }
+
                             @Override
                             public void onResponse(String response, int id) {
                                 final MessageBean[] messageBean = {new MessageBean()};
-                                messageBeans  = new Gson().fromJson(response, MessageBean.class);
-                                getInfos();
+                                messageBeans = new Gson().fromJson(response, MessageBean.class);
+
+                                for (int i = 0; i < messageBeans.getData().getNews().size(); i++) {
+                                    list.add(messageBeans.getData().getNews().get(i));
+                                }
                                 Message mes = new Message();
                                 mes.what = 2;
                                 handler.sendMessage(mes);
-                                Log.i(TAG, "onResponse: "+list.size());
+                                Log.i(TAG, "onResponse: " + list.size() + "*********************");
                             }
                         });
 
@@ -239,11 +233,6 @@ public class MyFragment extends Fragment {
         banner.setBannerAnimation(Transformer.DepthPage);
         banner.isAutoPlay(true);
         banner.setDelayTime(3000);
-
-
-
-
-
         banner.setBannerTitles(arr);
         banner.setIndicatorGravity(BannerConfig.CENTER);
         banner.setOnBannerListener(new MyOnBannerListener());
@@ -261,7 +250,7 @@ public class MyFragment extends Fragment {
         this.sampleAdapter = new SampleAdapter(list, getContext());
         SampleAdapter sampleAdapter = this.sampleAdapter;
         listView.setAdapter(sampleAdapter);
-        setonclick();
+
 
     }
 
@@ -269,9 +258,9 @@ public class MyFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "onItemClick: "+position+TAG);
+                Log.i(TAG, "onItemClick: " + position + TAG);
                 Intent intent = new Intent(getContext(), WebActivity.class);
-                intent.putExtra("url", Constants.ROOTURL + messageBeans.getData().getNews().get(position + 2).getUrl());
+                intent.putExtra("url", Constants.ROOTURL + list.get(position - 1).getUrl());
                 startActivity(intent);
             }
         });
@@ -283,26 +272,51 @@ public class MyFragment extends Fragment {
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
-        if (messageBeans != null) {
-            Log.i(TAG, "MYFragment: "+messageBeans.getData().getNews().size());
-            bannerList.clear();
-            bannerList.add(Constants.ROOTURL+messageBeans.getData().getNews().get(0).getListimage());
-            bannerList.add(Constants.ROOTURL+messageBeans.getData().getNews().get(1).getListimage());
-            bannerList.add(Constants.ROOTURL+messageBeans.getData().getNews().get(2).getListimage());
-            banner.setImageLoader(new GlideImageLoader());
-            arr.clear();
-            arr.add(messageBeans.getData().getNews().get(0).getTitle());
-            arr.add(messageBeans.getData().getNews().get(1).getTitle());
-            arr.add(messageBeans.getData().getNews().get(2).getTitle());
-            Message msg = new Message();
-            msg.what = 1;
-handler.sendMessage(msg);
+                if (messageBeans != null) {
+                    Log.i(TAG, "MYFragment: " + messageBeans.getData().getNews().size());
+                    bannerList.clear();
+                    bannerList.add(Constants.ROOTURL + messageBeans.getData().getNews().get(0).getListimage());
+                    bannerList.add(Constants.ROOTURL + messageBeans.getData().getNews().get(1).getListimage());
+                    bannerList.add(Constants.ROOTURL + messageBeans.getData().getNews().get(2).getListimage());
+                    banner.setImageLoader(new GlideImageLoader());
+                    if (messageBeans.getData().getTitle().equals("北京")) {
+                        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                            @Override
+                            public void onPageScrolled(int i, float v, int i1) {
 
-        for (int i = 3 ;i<messageBeans.getData().getNews().size();i++)
-                list.add(messageBeans.getData().getNews().get(i));
+                            }
 
-            timer.cancel();
-        }
+                            @Override
+                            public void onPageSelected(int i) {
+                                Mainactivity mainactivity = (Mainactivity) context;
+                                mainactivity.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+
+                            }
+
+                            @Override
+                            public void onPageScrollStateChanged(int i) {
+
+                            }
+                        });
+
+
+
+                    }
+
+
+                    arr.clear();
+                    arr.add(messageBeans.getData().getNews().get(0).getTitle());
+                    arr.add(messageBeans.getData().getNews().get(1).getTitle());
+                    arr.add(messageBeans.getData().getNews().get(2).getTitle());
+                    Message msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+
+                    for (int i = 3; i < messageBeans.getData().getNews().size(); i++)
+                        list.add(messageBeans.getData().getNews().get(i));
+
+                    timer.cancel();
+                }
             }
         }, 1000, 1000);
     }
@@ -318,7 +332,7 @@ handler.sendMessage(msg);
 
 
     public void getMessageBean(String string) {
-        Log.i(TAG, "getMessageBean: "+string);
+        Log.i(TAG, "getMessageBean: " + string);
         final MessageBean[] messageBean = {new MessageBean()};
         OkHttpUtils.get()
                 .url(Constants.ROOTURL + childrenBeans.getUrl())
@@ -327,6 +341,7 @@ handler.sendMessage(msg);
                     @Override
                     public void onError(Call call, Exception e, int id) {
                     }
+
                     @Override
                     public void onResponse(String response, int id) {
 
