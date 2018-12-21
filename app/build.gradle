@@ -41,4 +41,5 @@ dependencies {
     testImplementation("com.squareup.okhttp3:mockwebserver:3.12.0")
     implementation 'com.zhy:okhttputils:2.6.2'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    implementation 'com.githang:status-bar-compat:latest.integration'
 }

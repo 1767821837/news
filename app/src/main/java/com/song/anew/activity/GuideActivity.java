@@ -53,6 +53,7 @@ public class GuideActivity extends AppCompatActivity {
                 Sputil.setBoolean(getApplicationContext(), ENTYHOMEKEY, true);
                 Intent intent = new Intent(getApplicationContext(), loginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

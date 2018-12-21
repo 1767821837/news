@@ -241,6 +241,9 @@ public class MyFragment extends Fragment {
         banner.setDelayTime(3000);
 
 
+
+
+
         banner.setBannerTitles(arr);
         banner.setIndicatorGravity(BannerConfig.CENTER);
         banner.setOnBannerListener(new MyOnBannerListener());

@@ -15,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.song.anew.Bean.User;
 import com.song.anew.R;
+import com.song.anew.util.StatusBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -71,6 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_register);
         //ButterKnife.bind(this);
         x.view().inject(this);
+//        StatusBarUtil.immersive(this, Color.argb(255, 255, 69, 69), 1);
+        StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
     }
 
     @Event(value = {R.id.tv_register, R.id.regist_back, R.id.tv_get_code})

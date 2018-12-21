@@ -1,11 +1,16 @@
 package com.song.anew.activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -15,6 +20,7 @@ import com.song.anew.fragment.ContentFragment;
 import com.song.anew.fragment.LiftmenuFragment;
 import com.song.anew.util.Constants;
 import com.song.anew.util.DensityUtil;
+import com.song.anew.util.StatusBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -27,6 +33,9 @@ public class Mainactivity extends SlidingFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainactivity);
+
+        //StatusBarUtil.immersive(this, Color.argb(255, 255, 69, 69), 1);
+        StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
         initnewsData();
         initwidgetid();
         initslidingmenu();
@@ -73,6 +82,12 @@ public class Mainactivity extends SlidingFragmentActivity {
     }
 
     private void initslidingmenu() {
+
+        WindowManager wm = (WindowManager) Mainactivity.this.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+
         //设置主页面
         setContentView(R.layout.activity_mainactivity);
 //        设置策划
@@ -86,7 +101,7 @@ public class Mainactivity extends SlidingFragmentActivity {
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
         //设置主页占据的位置
-        slidingMenu.setBehindOffset(DensityUtil.dp2px(getApplicationContext(), 200));
+        slidingMenu.setBehindOffset(DensityUtil.dp2px(getApplicationContext(), width/4));
 
 
     }

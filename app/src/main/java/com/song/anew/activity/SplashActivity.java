@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,8 +21,10 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.song.anew.R;
 import com.song.anew.util.Sputil;
+import com.song.anew.util.StatusBarUtil;
 
 public class SplashActivity extends AppCompatActivity {
     public static final String ENTYHOMEKEY = "ENTYHOME";
@@ -33,7 +36,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spalace);
         mhander = new Handler();
-
+        //StatusBarUtil.immersive(this, Color.argb(255, 252, 252, 252), 1);
+        StatusBarCompat.setStatusBarColor(this, Color.argb(255, 252, 252, 252), true);
         lv = findViewById(R.id.lv_splash);
         initanm();
     }
@@ -84,7 +88,8 @@ public class SplashActivity extends AppCompatActivity {
             boolean bo = new Sputil().getBoolean(getApplicationContext(), ENTYHOMEKEY, false);
             if (bo) {
                 //aoutjump(Mainactivity.class, 1000);
-                aoutjump(Mainactivity.class, 1000);
+                //aoutjump(Mainactivity.class, 1000);
+                aoutjump(loginActivity.class, 1000);
             } else {
                 Intent intent = new Intent(getApplicationContext(), GuideActivity.class);
                 startActivity(intent);
