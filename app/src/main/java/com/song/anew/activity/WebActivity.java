@@ -2,6 +2,7 @@ package com.song.anew.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -40,6 +42,9 @@ public class WebActivity extends Activity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_web);
         x.view().inject(this);
+        StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
+
+
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +66,7 @@ public class WebActivity extends Activity {
                 Toast.makeText(WebActivity.this, "刷新成功！！！", Toast.LENGTH_SHORT).show();
             }
         });
-        setThemeColor(android.R.color.holo_green_light, android.R.color.holo_green_dark);
+        //setThemeColor(android.R.color.holo_green_light, android.R.color.holo_green_dark);
 
 
         shua();

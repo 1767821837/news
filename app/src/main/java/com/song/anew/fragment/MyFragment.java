@@ -68,7 +68,7 @@ public class MyFragment extends Fragment {
 
             } else if (msg.what == 2) {
                 sampleAdapter.notifyDataSetChanged();
-                setonclick();
+                 setonclick();
             }
         }
     };
