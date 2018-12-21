@@ -151,7 +151,7 @@ public class MyFragment extends Fragment {
         WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
-        int height = dm.heightPixels;//获取屏幕高度
+        int height = dm.widthPixels;//获取屏幕高度
         mRefreshLayout = inflate.findViewById(R.id.refreshLayout);
         View header = LayoutInflater.from(getContext()).inflate(R.layout.header, null);
         banner = header.findViewById(R.id.banner);
