@@ -120,7 +120,7 @@ public class Mainactivity extends SlidingFragmentActivity {
             getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
         }
         else {
-            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         }
   }
 

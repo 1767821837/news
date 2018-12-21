@@ -2,6 +2,7 @@ package com.song.anew.basepage;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.song.anew.BasePage;
 import com.song.anew.R;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 public class Homepage extends BasePage {
     public static final int ERROR = 101;
     public static final int SUCCESS = 102;
-
+    private boolean aBoolean = false;
+    public int tap = 0;
     String[] pageTitles = {"北京", "中国", "国际", "文娱", "体育", "生活", "旅游", "科技", "军事", "财经", "女性", "倍儿逗"};
     private ArrayList<MyFragment> arrayList = new ArrayList<>();
     private ViewpagerAdapter adapter;
@@ -32,7 +34,7 @@ public class Homepage extends BasePage {
         super.initData();
         adapter = new ViewpagerAdapter(((Mainactivity) context).getContentFragment().getChildFragmentManager(), arrayList, context);
         viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new mypagechange());
+
         viewPager.setOffscreenPageLimit(5);
 
         tablayout.setViewPager(viewPager, pageTitles);
@@ -44,27 +46,6 @@ public class Homepage extends BasePage {
 
     }
 
-    class mypagechange implements ViewPager.OnPageChangeListener {
-        @Override
-        public void onPageScrolled(int i, float v, int i1) {
-            if (i != 0) {
-                Mainactivity mainactivity = (Mainactivity) context;
-                mainactivity.setNohua(0);
-            } else {
-                Mainactivity mainactivity = (Mainactivity) context;
-                mainactivity.setNohua(1);
-            }
-        }
 
-        @Override
-        public void onPageSelected(int i) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int i) {
-
-        }
-    }
 
 }

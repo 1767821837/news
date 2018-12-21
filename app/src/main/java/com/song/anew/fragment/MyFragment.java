@@ -39,6 +39,7 @@ import com.song.anew.adapter.GlideImageLoader;
 import com.song.anew.adapter.MessageAdapter;
 import com.song.anew.adapter.SampleAdapter;
 import com.song.anew.util.Constants;
+import com.song.anew.util.DensityUtil;
 import com.song.anew.util.Sputil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -85,8 +86,8 @@ public class MyFragment extends Fragment {
     private List<String> bannerList;
     private List<String> arr;
     private SampleAdapter sampleAdapter;
-    private int i =0;
-    private   double num[] = new double[5];
+    private int i = 0;
+    private double num[] = new double[5];
 
     public String getTitle() {
         return title;
@@ -293,8 +294,7 @@ public class MyFragment extends Fragment {
 
                             @Override
                             public void onPageSelected(int i) {
-                                Mainactivity mainactivity = (Mainactivity) context;
-                                mainactivity.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+
 
                             }
 
@@ -304,30 +304,6 @@ public class MyFragment extends Fragment {
                             }
                         });
 
-                     listView.setOnTouchListener(new View.OnTouchListener() {
-                         @Override
-
-                         public boolean onTouch(View v, MotionEvent event) {
-                             Log.i(TAG, "onTouch: "+event.getX()+"*************"+event.getY());
-
-
-                             num[i] = event.getX();
-                             if((num[i]-num[0])>20){
-                                 Log.i(TAG, "onTouch: "+(num[i]-num[0])+"我进来了哟");
-                                 Mainactivity mainactivity = (Mainactivity) context;
-                                 mainactivity.getSlidingMenu().toggle();
-                                 i = 0;
-                                 num = new double[5];
-                             }
-                             else if(i>4){
-                                 i = 0;
-                                 num = new double[5];
-                             }
-                             i++;
-
-                             return false;
-                         }
-                     });
 
                     }
 
