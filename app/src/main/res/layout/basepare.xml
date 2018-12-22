@@ -22,7 +22,7 @@
         android:layout_weight="9"
         android:gravity="center"
         android:text="主页"
-        android:textColor="#000"
+        android:textColor="#303030"
         android:textSize="30sp" />
     <TextView
         android:layout_width="0dp"

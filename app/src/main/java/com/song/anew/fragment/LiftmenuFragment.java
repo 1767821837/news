@@ -53,9 +53,13 @@ public class LiftmenuFragment extends BaseFragment {
         user = mainactivit.user;
         tv_user_name.setText(user.getName());
         if (!TextUtils.isEmpty(user.getPhoto())) {
+            try {
 
-            Uri uri = Uri.parse(user.getPhoto());
-            iv.setImageURI(uri);
+                Uri uri = Uri.parse(user.getPhoto());
+                iv.setImageURI(uri);
+            } catch (Exception e) {
+
+            }
         }
         user = mainactivit.user;
         tv_user_name.setText("用户名：" + user.getName());

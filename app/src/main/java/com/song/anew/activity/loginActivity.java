@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import com.song.anew.Bean.User;
 import com.song.anew.R;
 import com.song.anew.util.StatusBarUtil;
+import com.song.anew.view.RoundImageView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -40,7 +42,7 @@ public class loginActivity extends Activity {
     EditText etTel;
     EditText etCode;
     Button btnLogin;
-
+RoundImageView roundiv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,34 @@ public class loginActivity extends Activity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     // 此处为得到焦点时的处理内容
-                } else {
-                    // 此处为失去焦点时的处理内容
+                    User user = new User();
+                    user.setName(etUser.getText().toString()+"");
+                    Log.i("========", "onFocusChange: "+user.getName());
+                    OkHttpUtils.postString()
+                            .url("http://134.175.154.154/new/api/news/getphoto")
+                            .content(new Gson().toJson(user))
+                            .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                            .build()
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onError(Call call, Exception e, int id) {
+
+                                }
+
+                                @Override
+                                public void onResponse(String response, int id) {
+                                    Log.i("++++++++", "onResponse: "+response);
+
+                                    try {
+
+                                        Uri uri = Uri.parse(response+"");
+                                        roundiv.setVisibility(View.VISIBLE);
+                                        roundiv.setImageURI(uri);
+                                    } catch (Exception e) {
+
+                                    }
+                                }
+                            });
                 }
             }
         });
@@ -157,6 +185,7 @@ public class loginActivity extends Activity {
         etTel = findViewById(R.id.et_tel);
         etCode = findViewById(R.id.et_code);
         btnLogin = findViewById(R.id.btn_login);
+        roundiv = findViewById(R.id.roundiv);
 
     }
 
