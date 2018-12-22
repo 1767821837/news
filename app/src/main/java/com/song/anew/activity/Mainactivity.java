@@ -1,5 +1,6 @@
 package com.song.anew.activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +16,7 @@ import com.google.gson.Gson;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.song.anew.Bean.HomePageBean;
+import com.song.anew.Bean.User;
 import com.song.anew.R;
 import com.song.anew.fragment.ContentFragment;
 import com.song.anew.fragment.LiftmenuFragment;
@@ -29,11 +31,13 @@ import okhttp3.Call;
 public class Mainactivity extends SlidingFragmentActivity {
     private long firstTime = 0;
     public HomePageBean homePageBean;
+    public User user;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        user = new Gson().fromJson(intent.getStringExtra("name"),User.class);
         setContentView(R.layout.activity_mainactivity);
-        //StatusBarUtil.immersive(this, Color.argb(255, 255, 69, 69), 1);
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
         initnewsData();
         initwidgetid();
@@ -94,7 +98,7 @@ public class Mainactivity extends SlidingFragmentActivity {
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
         //设置主页占据的位置
-        slidingMenu.setBehindOffset(150);
+        slidingMenu.setBehindOffset(100);
 
 
     }
