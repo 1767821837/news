@@ -37,10 +37,12 @@
         android:layout_weight="1"
         android:gravity="center">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:src="@mipmap/icon" />
+        <com.song.anew.view.RoundImageView
+            android:id="@+id/roundiv"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/splashactivity" />
     </LinearLayout>
 
     <LinearLayout

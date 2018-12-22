@@ -1,9 +1,12 @@
 package com.song.anew.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -21,6 +24,7 @@ import com.lzy.okgo.OkGo;
 import com.song.anew.Bean.User;
 import com.song.anew.R;
 import com.song.anew.util.StatusBarUtil;
+import com.song.anew.view.RoundImageView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -56,11 +60,12 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView registback;
     @ViewInject(R.id.tv_get_code)
     private TextView tvGetCode;
-
+    @ViewInject(R.id.roundiv)
+    private RoundImageView roundImageView;
     private int i;
 
     private boolean flag = false;
-
+    private User user = new User();
     private String username;
     private String password;
     private String phone;
@@ -77,11 +82,16 @@ public class RegisterActivity extends AppCompatActivity {
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
     }
 
-    @Event(value = {R.id.tv_register, R.id.regist_back, R.id.tv_get_code})
+    @Event(value = {R.id.tv_register, R.id.regist_back, R.id.tv_get_code,R.id.roundiv})
     private void getEvent(View view) {
         switch (view.getId()) {
             case R.id.tv_register:
                 regist();
+                break;
+            case R.id.roundiv:
+                Intent intent = new Intent(
+                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 20);
                 break;
             case R.id.regist_back:
                 finish();
@@ -109,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             if (flag) {
-                User user = new User();
+
                 user.setName(username);
                 user.setPassword(password);
                 user.setTel(phone);
@@ -229,5 +239,17 @@ public class RegisterActivity extends AppCompatActivity {
         password = etPsd.getText().toString();
         phone = etTel.getText().toString();
         code = etCode.getText().toString();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK&&requestCode==20){
+            Uri uri = data.getData();
+            roundImageView.setImageURI(uri);
+            user.setPhoto(uri+"");
+        }
+
+
     }
 }
