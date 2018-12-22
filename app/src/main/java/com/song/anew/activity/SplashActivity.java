@@ -72,6 +72,8 @@ public class SplashActivity extends AppCompatActivity {
                 if(ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)!=
                         PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(SplashActivity.this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},1);
+                }else{
+                    JumpActivity();
                 }
 
             }
@@ -193,7 +195,8 @@ public class SplashActivity extends AppCompatActivity {
         switch (requestCode){
             case 1:
                 if(grantResults.length>0&&grantResults[0] ==PackageManager.PERMISSION_GRANTED){
-
+                    //判断联网，跳转页面
+                    JumpActivity();
                 }else{
                     finish();
                 }
