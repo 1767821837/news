@@ -89,7 +89,6 @@ public class loginActivity extends Activity {
                 //ProgressBar
 
 
-
                 String name = etUser.getText().toString();
                 String password = etPsd.getText().toString();
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
