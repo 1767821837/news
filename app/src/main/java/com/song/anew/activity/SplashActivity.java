@@ -81,8 +81,6 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                //判断联网，跳转页面
-                JumpActivity();
 
             }
 
