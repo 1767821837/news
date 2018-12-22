@@ -26,47 +26,139 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
         android:layout_marginTop="20dp"
-        android:text="个人中心"
-        android:textSize="22sp" />
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/myinfo" />
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:layout_marginLeft="10dp"
+            android:gravity="left|center"
+            android:text="个人中心"
+            android:textSize="22sp" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@mipmap/right"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:text="我的文件"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/tv_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:text="我的相册"
-        android:textSize="22sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:text="我的钱包"
-        android:textSize="22sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:text="我的特权"
-        android:textSize="22sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/folder" />
+        <TextView
+            android:id="@+id/tv_file"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:layout_marginLeft="10dp"
+            android:gravity="left|center"
+            android:text="我的文件"
+            android:textSize="22sp" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@mipmap/right"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/photo" />
+        <TextView
+            android:id="@+id/tv_photo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:layout_marginLeft="10dp"
+            android:gravity="left|center"
+            android:text="我的相册"
+            android:textSize="22sp" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@mipmap/right"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/wallet" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:layout_marginLeft="10dp"
+            android:gravity="left|center"
+            android:text="我的钱包"
+            android:textSize="22sp" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@mipmap/right"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/privilege" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:layout_marginLeft="10dp"
+            android:gravity="left|center"
+            android:text="我的特权"
+            android:textSize="22sp" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@mipmap/right"/>
+    </LinearLayout>
 
 </LinearLayout>

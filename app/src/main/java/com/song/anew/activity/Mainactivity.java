@@ -94,7 +94,7 @@ public class Mainactivity extends SlidingFragmentActivity {
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
         //设置主页占据的位置
-        slidingMenu.setBehindOffset(DensityUtil.dp2px(getApplicationContext(), width/5));
+        slidingMenu.setBehindOffset(150);
 
 
     }
