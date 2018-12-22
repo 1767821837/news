@@ -42,7 +42,6 @@ public class loginActivity extends Activity {
     Button btnLogin;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +51,16 @@ public class loginActivity extends Activity {
 
         initView();
         initlisten();
+        etPsd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    // 此处为得到焦点时的处理内容
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
     }
 
     @Override
@@ -121,7 +130,7 @@ public class loginActivity extends Activity {
 
                                         Toast.makeText(loginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(loginActivity.this, Mainactivity.class);
-                                        intent.putExtra("name",response);
+                                        intent.putExtra("name", response);
                                         startActivity(intent);
                                         show.dismiss();
                                         finish();

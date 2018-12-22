@@ -75,10 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_register);
-        //ButterKnife.bind(this);
         x.view().inject(this);
-//        StatusBarUtil.immersive(this, Color.argb(255, 255, 69, 69), 1);
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
     }
 
