@@ -5,6 +5,8 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
+import com.song.anew.BaseFragment;
 import com.song.anew.Bean.User;
 import com.song.anew.R;
 import com.song.anew.util.StatusBarUtil;
@@ -265,7 +268,9 @@ public class RegisterActivity extends AppCompatActivity {
                     cursor.close();
                 }
             }
-
+            Bitmap bitmap = BitmapFactory.decodeFile(photoURI);
+            if(bitmap!=null)
+                roundImageView.setImageBitmap(bitmap);
             user.setPhoto(photoURI+"");
         }
 
