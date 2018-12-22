@@ -1,5 +1,6 @@
 package com.song.anew.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
@@ -35,8 +36,12 @@ private List<HomePageBean.DataBean> data;
         tv_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE); // 如果少了这句，有些机型上面不能正常打开文件管理器，比如金立
+                startActivityForResult(intent, 10);
 
-            }
+        }
         });
 
         tv_photo.setOnClickListener(new View.OnClickListener() {
