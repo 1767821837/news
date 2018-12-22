@@ -52,6 +52,7 @@ public class RoundImageView extends ImageView{
             return;
         }
         Bitmap bitmap = drawableToBitamp(getDrawable());
+
         mBitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         float scale = 1.0f;
         if (!(bitmap.getWidth() == getWidth() && bitmap.getHeight() == getHeight()))

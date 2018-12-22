@@ -1,8 +1,18 @@
 package com.song.anew.fragment;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +48,7 @@ public class LiftmenuFragment extends BaseFragment {
     private LinearLayout exit;
 
     private List<HomePageBean.DataBean> data;
+    private String photoURI;
 
     @Override
     public View initview() {
@@ -51,12 +62,12 @@ public class LiftmenuFragment extends BaseFragment {
 
         Mainactivity mainactivit = (Mainactivity) getActivity();
         user = mainactivit.user;
-        tv_user_name.setText(user.getName());
         if (!TextUtils.isEmpty(user.getPhoto())) {
             try {
-
-                Uri uri = Uri.parse(user.getPhoto());
-                iv.setImageURI(uri);
+//                iv.setImageURI(Uri.parse(user.getPhoto()));
+                Bitmap  bitmap = BitmapFactory.decodeFile(user.getPhoto());
+                if (bitmap!=null)
+                iv.setImageBitmap(bitmap);
             } catch (Exception e) {
 
             }
@@ -81,6 +92,7 @@ public class LiftmenuFragment extends BaseFragment {
         tv_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Log.i("**************", "onClick: ");
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("*/*");
@@ -91,6 +103,14 @@ public class LiftmenuFragment extends BaseFragment {
         });
 
         tv_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(
+                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 20);
+            }
+        });
+        iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(
@@ -113,13 +133,35 @@ public class LiftmenuFragment extends BaseFragment {
         this.data = data;
     }
 
+
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
         if (resultCode == Activity.RESULT_OK && requestCode == 20) {
             Uri uri = data.getData();
-            iv.setImageURI(uri);
-            user.setPhoto(uri + "");
-            Log.i("*****", "onActivityResult: " + user.toString());
+            final String scheme = uri.getScheme();
+            photoURI = null;
+            if (scheme == null) {
+                photoURI = uri.getPath();
+            } else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+                photoURI = uri.getPath();
+            } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+                Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+                if (null != cursor) {
+                    if (cursor.moveToFirst()) {
+                        int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                        if (index > -1) {
+                            photoURI = cursor.getString(index);
+                        }
+                    }
+                    cursor.close();
+                }
+            }
+
+            user.setPhoto(photoURI + "");
             OkHttpUtils.postString()
                     .url("http://134.175.154.154/new/api/news/update")
                     .content(new Gson().toJson(user))
@@ -135,11 +177,11 @@ public class LiftmenuFragment extends BaseFragment {
                         public void onResponse(String response, int id) {
                             User users;
                             users = new Gson().fromJson(response, User.class);
-                            if (!TextUtils.isEmpty(users.getName()))
-
-                            {
+                            Log.i("+++++++++++++++++++++++", "onResponse: " + users.getPhoto());
+                            if (!TextUtils.isEmpty(users.getName())) {
                                 Mainactivity mainactivity = (Mainactivity) getActivity();
                                 mainactivity.user = users;
+                                iv.setImageBitmap(BitmapFactory.decodeFile(photoURI));
                                 Toast.makeText(context, "头像更新成功成功", Toast.LENGTH_SHORT).show();
 
                             } else {
@@ -147,9 +189,10 @@ public class LiftmenuFragment extends BaseFragment {
                             }
                         }
                     });
+        }
 
         }
-    }
+
 
 
 }

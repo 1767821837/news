@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,19 +73,11 @@ RoundImageView roundiv;
                                 public void onError(Call call, Exception e, int id) {
 
                                 }
-
                                 @Override
                                 public void onResponse(String response, int id) {
-                                    Log.i("++++++++", "onResponse: "+response);
-
-                                    try {
-
-                                        Uri uri = Uri.parse(response+"");
-                                        roundiv.setVisibility(View.VISIBLE);
-                                        roundiv.setImageURI(uri);
-                                    } catch (Exception e) {
-
-                                    }
+                                    Bitmap bitmap = BitmapFactory.decodeFile(response.trim());
+                                    if(bitmap!=null)
+                                        roundiv.setImageBitmap(bitmap);
                                 }
                             });
                 }
@@ -94,7 +88,6 @@ RoundImageView roundiv;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == 3 && requestCode == 2) {
             String namePass = data.getStringExtra("namePass");
             //Toast.makeText(this, "1111111111111"+namePass, Toast.LENGTH_LONG).show();

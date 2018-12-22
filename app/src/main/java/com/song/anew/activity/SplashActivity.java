@@ -1,17 +1,22 @@
 package com.song.anew.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.animation.AlphaAnimation;
@@ -36,12 +41,14 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spalace);
+
         mhander = new Handler();
         
         //StatusBarUtil.immersive(this, Color.argb(255, 252, 252, 252), 1);
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 252, 252, 252), true);
         lv = findViewById(R.id.lv_splash);
         initanm();
+
     }
 
     private void initanm() {
@@ -62,6 +69,10 @@ public class SplashActivity extends AppCompatActivity {
         set.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                if(ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)!=
+                        PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(SplashActivity.this,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},1);
+                }
 
             }
 
@@ -174,5 +185,21 @@ public class SplashActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         JumpActivity();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case 1:
+                if(grantResults.length>0&&grantResults[0] ==PackageManager.PERMISSION_GRANTED){
+
+                }else{
+                    finish();
+                }
+                break;
+        }
+
+
     }
 }

@@ -1,11 +1,14 @@
 package com.song.anew.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -86,6 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                 regist();
                 break;
             case R.id.roundiv:
+
                 Intent intent = new Intent(
                         Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 20);
@@ -243,8 +247,26 @@ public class RegisterActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK&&requestCode==20){
             Uri uri = data.getData();
-            roundImageView.setImageURI(uri);
-            user.setPhoto(uri+"");
+            final String scheme = uri.getScheme();
+            String photoURI = null;
+            if (scheme == null) {
+                photoURI = uri.getPath();
+            } else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+                photoURI = uri.getPath();
+            } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+                Cursor cursor = this.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+                if (null != cursor) {
+                    if (cursor.moveToFirst()) {
+                        int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                        if (index > -1) {
+                            photoURI = cursor.getString(index);
+                        }
+                    }
+                    cursor.close();
+                }
+            }
+
+            user.setPhoto(photoURI+"");
         }
 
 
