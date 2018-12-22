@@ -34,12 +34,9 @@ public class Homepage extends BasePage {
         super.initData();
         adapter = new ViewpagerAdapter(((Mainactivity) context).getContentFragment().getChildFragmentManager(), arrayList, context);
         viewPager.setAdapter(adapter);
-
         viewPager.setOffscreenPageLimit(5);
-
         tablayout.setViewPager(viewPager, pageTitles);
         initnewData();
-        //tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     private void initnewData() {

@@ -33,14 +33,12 @@ public class Mainactivity extends SlidingFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainactivity);
-
         //StatusBarUtil.immersive(this, Color.argb(255, 255, 69, 69), 1);
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
         initnewsData();
         initwidgetid();
         initslidingmenu();
         initfragment();
-
     }
 
     private void initnewsData() {
@@ -67,22 +65,17 @@ public class Mainactivity extends SlidingFragmentActivity {
                     }
                 });
     }
-
     private void initwidgetid() {
-
     }
-
     private void initfragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fl_main_content, new ContentFragment(), "fl_main_content");
         ft.replace(R.id.fl_main_leftcontent, new LiftmenuFragment(), "fl_main_leftcontent");
         ft.commit();
-
     }
 
     private void initslidingmenu() {
-
         WindowManager wm = (WindowManager) Mainactivity.this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
@@ -138,6 +131,8 @@ public class Mainactivity extends SlidingFragmentActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+
+        getSlidingMenu().toggle(false);
         if (keyCode==KeyEvent.KEYCODE_BACK){
             long secondTime = System.currentTimeMillis();
             if (secondTime-firstTime>2000){
