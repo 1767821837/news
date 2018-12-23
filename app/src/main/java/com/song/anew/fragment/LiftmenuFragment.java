@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 import com.song.anew.BaseFragment;
 import com.song.anew.Bean.HomePageBean;
@@ -67,9 +69,9 @@ public class LiftmenuFragment extends BaseFragment {
         user = mainactivit.user;
         if (!TextUtils.isEmpty(user.getPhoto())) {
             try {
-                Glide.with(context).load((String)user.getPhoto()).into(iv);
-
-
+                Glide.with(context).load((String) user.getPhoto())
+                        .signature(new StringSignature(SystemClock.currentThreadTimeMillis() + ""))
+                        .into(iv);
 
 
             } catch (Exception e) {
@@ -124,8 +126,6 @@ public class LiftmenuFragment extends BaseFragment {
         });
 
 
-
-
         return view;
     }
 
@@ -138,8 +138,6 @@ public class LiftmenuFragment extends BaseFragment {
     public void setData(List<HomePageBean.DataBean> data) {
         this.data = data;
     }
-
-
 
 
     @Override
@@ -166,8 +164,8 @@ public class LiftmenuFragment extends BaseFragment {
                     cursor.close();
                 }
             }
-            user.setPhoto("https://songtell-1251684550.cos.ap-chengdu.myqcloud.com/news/"+user.getName()+"Photo.jpg");
-            File_upload file_upload= new File_upload(context,photoURI,user);
+            user.setPhoto("https://songtell-1251684550.cos.ap-chengdu.myqcloud.com/news/" + user.getName() + "Photo.jpg");
+            File_upload file_upload = new File_upload(context, photoURI, user);
             OkHttpUtils.postString()
                     .url("http://134.175.154.154/new/api/news/update")
                     .content(new Gson().toJson(user))
@@ -196,8 +194,7 @@ public class LiftmenuFragment extends BaseFragment {
                     });
         }
 
-        }
-
+    }
 
 
 }

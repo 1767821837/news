@@ -77,7 +77,6 @@ public class File_upload {
             public void onFail(CosXmlRequest request, CosXmlClientException exception, CosXmlServiceException serviceException) {
                 // TODO: 2018/10/22
                 Toast.makeText(context,"上传失败",Toast.LENGTH_SHORT).show();
-
             }
         });
     }

@@ -166,9 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "输入内容不能为空", Toast.LENGTH_SHORT).show();
         }
 
-
     }
-
 
     private void disabled() {
         i = 60;

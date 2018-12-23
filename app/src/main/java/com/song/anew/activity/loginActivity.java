@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.song.anew.Bean.User;
@@ -77,7 +79,9 @@ public class loginActivity extends Activity {
 
                                 @Override
                                 public void onResponse(String response, int id) {
-                                    Glide.with(loginActivity.this).load((String) response).into(roundiv);
+                                    Glide.with(loginActivity.this).load((String) response)
+                                            .signature(new StringSignature(SystemClock.currentThreadTimeMillis() + ""))
+                                            .into(roundiv);
                                 }
                             });
                 }
