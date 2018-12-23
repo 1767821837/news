@@ -1,4 +1,5 @@
 package com.song.anew.activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,7 +9,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.githang.statusbar.StatusBarCompat;
@@ -32,12 +35,12 @@ public class Mainactivity extends SlidingFragmentActivity {
     private long firstTime = 0;
     public HomePageBean homePageBean;
     public User user;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         user = new Gson().fromJson(intent.getStringExtra("name"),User.class);
-
         setContentView(R.layout.activity_mainactivity);
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
         initnewsData();
@@ -61,12 +64,8 @@ public class Mainactivity extends SlidingFragmentActivity {
                     public void onResponse(String response, int id) {
                         homePageBean = new Gson().fromJson(response, HomePageBean.class);
                         for (int i = 0; i <homePageBean.getData().get(0).getChildren().size() ; i++) {
-                            Log.i("********", "onResponse: " + homePageBean.getData().get(0).getChildren().get(i).getTitle());
-//                            Log.i("********", "onResponse: " + homePageBean.getData().get(0).getChildren().get(2).getTitle());
-//                            Log.i("********", "onResponse: " + homePageBean.getData().get(0).getChildren().size());
+
                         }
-
-
                     }
                 });
     }
@@ -156,4 +155,7 @@ public class Mainactivity extends SlidingFragmentActivity {
 
      return homePageBean;
     }
+
+
+
 }

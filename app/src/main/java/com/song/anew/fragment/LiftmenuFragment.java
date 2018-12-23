@@ -16,10 +16,12 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.song.anew.BaseFragment;
 import com.song.anew.Bean.HomePageBean;
@@ -27,6 +29,7 @@ import com.song.anew.Bean.User;
 import com.song.anew.R;
 import com.song.anew.activity.Mainactivity;
 import com.song.anew.activity.loginActivity;
+import com.song.anew.util.File_upload;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -60,14 +63,15 @@ public class LiftmenuFragment extends BaseFragment {
         iv = view.findViewById(R.id.roundiv);
         exit = view.findViewById(R.id.exit);
 
-        Mainactivity mainactivit = (Mainactivity) getActivity();
+        final Mainactivity mainactivit = (Mainactivity) getActivity();
         user = mainactivit.user;
         if (!TextUtils.isEmpty(user.getPhoto())) {
             try {
-//                iv.setImageURI(Uri.parse(user.getPhoto()));
-                Bitmap  bitmap = BitmapFactory.decodeFile(user.getPhoto());
-                if (bitmap!=null)
-                iv.setImageBitmap(bitmap);
+                Glide.with(context).load((String)user.getPhoto()).into(iv);
+
+
+
+
             } catch (Exception e) {
 
             }
@@ -92,7 +96,6 @@ public class LiftmenuFragment extends BaseFragment {
         tv_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Log.i("**************", "onClick: ");
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("*/*");
@@ -116,8 +119,11 @@ public class LiftmenuFragment extends BaseFragment {
                 Intent intent = new Intent(
                         Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 20);
+
             }
         });
+
+
 
 
         return view;
@@ -160,8 +166,8 @@ public class LiftmenuFragment extends BaseFragment {
                     cursor.close();
                 }
             }
-
-            user.setPhoto(photoURI + "");
+            user.setPhoto("https://songtell-1251684550.cos.ap-chengdu.myqcloud.com/news/"+user.getName()+"Photo.jpg");
+            File_upload file_upload= new File_upload(context,photoURI,user);
             OkHttpUtils.postString()
                     .url("http://134.175.154.154/new/api/news/update")
                     .content(new Gson().toJson(user))
@@ -177,12 +183,11 @@ public class LiftmenuFragment extends BaseFragment {
                         public void onResponse(String response, int id) {
                             User users;
                             users = new Gson().fromJson(response, User.class);
-                            Log.i("+++++++++++++++++++++++", "onResponse: " + users.getPhoto());
                             if (!TextUtils.isEmpty(users.getName())) {
                                 Mainactivity mainactivity = (Mainactivity) getActivity();
                                 mainactivity.user = users;
                                 iv.setImageBitmap(BitmapFactory.decodeFile(photoURI));
-                                Toast.makeText(context, "头像更新成功成功", Toast.LENGTH_SHORT).show();
+
 
                             } else {
                                 Toast.makeText(context, "头像更新失败", Toast.LENGTH_SHORT).show();

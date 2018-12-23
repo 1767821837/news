@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.song.anew.Bean.User;
@@ -45,7 +46,6 @@ public class loginActivity extends Activity {
     EditText etCode;
     Button btnLogin;
     RoundImageView roundiv;
-    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +77,7 @@ public class loginActivity extends Activity {
 
                                 @Override
                                 public void onResponse(String response, int id) {
-                                    Bitmap bitmap = BitmapFactory.decodeFile(response.trim());
-                                    if (bitmap != null)
-                                        roundiv.setImageBitmap(bitmap);
+                                    Glide.with(loginActivity.this).load((String) response).into(roundiv);
                                 }
                             });
                 }
@@ -89,29 +87,18 @@ public class loginActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        roundiv.setImageResource(R.mipmap.portrait);
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 3 && requestCode == 2) {
             String namePass = data.getStringExtra("namePass");
-            String photoURI = data.getStringExtra("photoURI");
             //Toast.makeText(this, "1111111111111"+namePass, Toast.LENGTH_LONG).show();
             String[] split = namePass.split("@");
             etUser.setText(split[0]);
             etPsd.setText(split[1]);
-
-
-            bitmap = BitmapFactory.decodeFile(photoURI);
-            if (bitmap != null){
-                roundiv.setImageBitmap(bitmap);
-                bitmap=null;
-            }
-
-
-
         } else {
             etUser.setText("");
             etPsd.setText("");
         }
+
 
     }
 
@@ -122,7 +109,6 @@ public class loginActivity extends Activity {
                 Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
                 //startActivity(intent);
                 startActivityForResult(intent, 2);
-
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -193,14 +179,7 @@ public class loginActivity extends Activity {
         etCode = findViewById(R.id.et_code);
         btnLogin = findViewById(R.id.btn_login);
         roundiv = findViewById(R.id.roundiv);
-
     }
-
-    public void login(View view) {
-
-
-    }
-
 
 }
 
