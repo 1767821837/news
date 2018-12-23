@@ -136,7 +136,7 @@ public class Mainactivity extends SlidingFragmentActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-        getSlidingMenu().toggle(false);
+
         if (keyCode==KeyEvent.KEYCODE_BACK){
             long secondTime = System.currentTimeMillis();
             if (secondTime-firstTime>2000){
