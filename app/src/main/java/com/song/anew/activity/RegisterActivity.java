@@ -77,6 +77,11 @@ public class RegisterActivity extends AppCompatActivity {
     private String phone;
     private String code;
     private String msgcode;
+    private Bitmap bitmap;
+    private String photoURI = null;
+    private String PassRegex = "^[a-zA-Z0-9]{6,10}$";
+    private String nameRegex = "^[A-Z]+$";
+    private String phoneRegex = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
     }
 
-    @Event(value = {R.id.tv_register, R.id.regist_back, R.id.tv_get_code,R.id.roundiv})
+    @Event(value = {R.id.tv_register, R.id.regist_back, R.id.tv_get_code, R.id.roundiv})
     private void getEvent(View view) {
         switch (view.getId()) {
             case R.id.tv_register:
@@ -116,51 +121,56 @@ public class RegisterActivity extends AppCompatActivity {
     private void regist() {
         getInfo();
         if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(code)) {
-            ////////验证码************************
 
-            if (msgcode.equals(code)) {
-                flag = true;
-            }
+            if (getRegex()) {
 
-            if (flag) {
+                ////////验证码************************
+//            getCode();
+//            if (msgcode.equals(code)) {
+//                flag = true;
+//            }
 
-                user.setName(username);
-                user.setPassword(password);
-                user.setTel(phone);
-                OkHttpUtils.postString()
-                        .url("http://134.175.154.154/new/api/news/regist")
-                        .content(new Gson().toJson(user))
-                        .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
+                if (true) {
 
-                            }
+                    user.setName(username);
+                    user.setPassword(password);
+                    user.setTel(phone);
+                    OkHttpUtils.postString()
+                            .url("http://134.175.154.154/new/api/news/regist")
+                            .content(new Gson().toJson(user))
+                            .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                            .build()
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onError(Call call, Exception e, int id) {
 
-                            @Override
-                            public void onResponse(String response, int id) {
-
-                                Gson gson = new Gson();
-                                User user = gson.fromJson(response, User.class);
-                                Log.i("8888", "onResponse: " + user);
-                                if (!TextUtils.isEmpty(user.getName())) {
-                                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
-
-                                    int resultcode = 3;
-                                    Intent data = new Intent();
-                                    String result = username + "@" + password;
-                                    data.putExtra("namePass", result);
-                                    setResult(resultcode, data);
-                                    finish();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "账号存在", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        });
 
-            } else {
-                Toast.makeText(getApplicationContext(), "验证码错误", Toast.LENGTH_SHORT).show();
+                                @Override
+                                public void onResponse(String response, int id) {
+
+                                    Gson gson = new Gson();
+                                    User user = gson.fromJson(response, User.class);
+                                    Log.i("8888", "onResponse: " + user);
+                                    if (!TextUtils.isEmpty(user.getName())) {
+                                        Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+
+                                        int resultcode = 3;
+                                        Intent data = new Intent();
+                                        String result = username + "@" + password;
+                                        data.putExtra("namePass", result);
+                                        data.putExtra("photoURI", photoURI);
+                                        setResult(resultcode, data);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "账号存在", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "验证码错误", Toast.LENGTH_SHORT).show();
+                }
             }
         } else {
             Toast.makeText(getApplicationContext(), "输入内容不能为空", Toast.LENGTH_SHORT).show();
@@ -197,19 +207,19 @@ public class RegisterActivity extends AppCompatActivity {
         }.start();
         Timer nTimer = new Timer();
         nTimer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    tvGetCode.setClickable(true);
-                    //tvGetCode.setBackgroundColor(Color.argb(0, 255, 255, 255));
-                    tvGetCode.setTextColor(Color.argb(255, 254, 69, 66));
-                }
-            });
-        }
-    }, i * 1000);
-}
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvGetCode.setClickable(true);
+                        //tvGetCode.setBackgroundColor(Color.argb(0, 255, 255, 255));
+                        tvGetCode.setTextColor(Color.argb(255, 254, 69, 66));
+                    }
+                });
+            }
+        }, i * 1000);
+    }
 
 
     private void getCode() {
@@ -246,10 +256,9 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK&&requestCode==20){
+        if (resultCode == Activity.RESULT_OK && requestCode == 20) {
             Uri uri = data.getData();
             final String scheme = uri.getScheme();
-            String photoURI = null;
             if (scheme == null) {
                 photoURI = uri.getPath();
             } else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
@@ -266,12 +275,27 @@ public class RegisterActivity extends AppCompatActivity {
                     cursor.close();
                 }
             }
-            Bitmap bitmap = BitmapFactory.decodeFile(photoURI);
-            if(bitmap!=null)
+            bitmap = BitmapFactory.decodeFile(photoURI);
+            if (bitmap != null)
                 roundImageView.setImageBitmap(bitmap);
-            user.setPhoto(photoURI+"");
+            user.setPhoto(photoURI + "");
         }
 
 
     }
+
+    //正则表达式
+    private boolean getRegex() {
+        if (!username.matches(nameRegex)) {
+            Toast.makeText(this, "用户名必须是大写字母！！！", Toast.LENGTH_SHORT).show();
+        } else if (!password.matches(PassRegex)) {
+            Toast.makeText(this, "密码必须包含字母和数字！！！", Toast.LENGTH_SHORT).show();
+        } else if (!phone.matches(phoneRegex)) {
+            Toast.makeText(this, "请输入正确的手机号！！！", Toast.LENGTH_SHORT).show();
+        } else {
+            return true;
+        }
+        return false;
+    }
+
 }

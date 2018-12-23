@@ -71,6 +71,8 @@ public class LiftmenuFragment extends BaseFragment {
             try {
                 Glide.with(context).load((String) user.getPhoto())
                         .signature(new StringSignature(SystemClock.currentThreadTimeMillis() + ""))
+                        .placeholder(R.mipmap.splashactivity)
+                        .error(R.mipmap.splashactivity)
                         .into(iv);
 
 

@@ -48,7 +48,7 @@ public class loginActivity extends Activity {
     EditText etCode;
     Button btnLogin;
     RoundImageView roundiv;
-
+    private Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +80,8 @@ public class loginActivity extends Activity {
                                 @Override
                                 public void onResponse(String response, int id) {
                                     Glide.with(loginActivity.this).load((String) response)
+                                            .placeholder(R.mipmap.splashactivity)
+                                            .error(R.mipmap.splashactivity)
                                             .signature(new StringSignature(SystemClock.currentThreadTimeMillis() + ""))
                                             .into(roundiv);
                                 }
@@ -91,13 +93,23 @@ public class loginActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        roundiv.setImageResource(R.mipmap.splashactivity);
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 3 && requestCode == 2) {
             String namePass = data.getStringExtra("namePass");
+            String photoURI = data.getStringExtra("photoURI");
             //Toast.makeText(this, "1111111111111"+namePass, Toast.LENGTH_LONG).show();
             String[] split = namePass.split("@");
             etUser.setText(split[0]);
             etPsd.setText(split[1]);
+
+
+            bitmap = BitmapFactory.decodeFile(photoURI);
+            if (bitmap != null){
+                roundiv.setImageBitmap(bitmap);
+                bitmap=null;
+            }
+
         } else {
             etUser.setText("");
             etPsd.setText("");
