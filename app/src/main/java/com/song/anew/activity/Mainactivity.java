@@ -37,6 +37,7 @@ public class Mainactivity extends SlidingFragmentActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         user = new Gson().fromJson(intent.getStringExtra("name"),User.class);
+
         setContentView(R.layout.activity_mainactivity);
         StatusBarCompat.setStatusBarColor(this, Color.argb(255, 255, 69, 69), true);
         initnewsData();

@@ -44,7 +44,8 @@ public class loginActivity extends Activity {
     EditText etTel;
     EditText etCode;
     Button btnLogin;
-RoundImageView roundiv;
+    RoundImageView roundiv;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +59,11 @@ RoundImageView roundiv;
         etPsd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     // 此处为得到焦点时的处理内容
                     User user = new User();
-                    user.setName(etUser.getText().toString()+"");
-                    Log.i("========", "onFocusChange: "+user.getName());
+                    user.setName(etUser.getText().toString() + "");
+                    Log.i("========", "onFocusChange: " + user.getName());
                     OkHttpUtils.postString()
                             .url("http://134.175.154.154/new/api/news/getphoto")
                             .content(new Gson().toJson(user))
@@ -73,10 +74,11 @@ RoundImageView roundiv;
                                 public void onError(Call call, Exception e, int id) {
 
                                 }
+
                                 @Override
                                 public void onResponse(String response, int id) {
                                     Bitmap bitmap = BitmapFactory.decodeFile(response.trim());
-                                    if(bitmap!=null)
+                                    if (bitmap != null)
                                         roundiv.setImageBitmap(bitmap);
                                 }
                             });
@@ -87,18 +89,29 @@ RoundImageView roundiv;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        roundiv.setImageResource(R.mipmap.portrait);
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 3 && requestCode == 2) {
             String namePass = data.getStringExtra("namePass");
+            String photoURI = data.getStringExtra("photoURI");
             //Toast.makeText(this, "1111111111111"+namePass, Toast.LENGTH_LONG).show();
             String[] split = namePass.split("@");
             etUser.setText(split[0]);
             etPsd.setText(split[1]);
+
+
+            bitmap = BitmapFactory.decodeFile(photoURI);
+            if (bitmap != null){
+                roundiv.setImageBitmap(bitmap);
+                bitmap=null;
+            }
+
+
+
         } else {
             etUser.setText("");
             etPsd.setText("");
         }
-
 
     }
 
@@ -109,6 +122,7 @@ RoundImageView roundiv;
                 Intent intent = new Intent(loginActivity.this, RegisterActivity.class);
                 //startActivity(intent);
                 startActivityForResult(intent, 2);
+
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
