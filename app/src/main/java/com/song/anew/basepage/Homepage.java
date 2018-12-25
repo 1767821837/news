@@ -38,11 +38,6 @@ public class Homepage extends BasePage {
         tablayout.setViewPager(viewPager, pageTitles);
         initnewData();
     }
-
     private void initnewData() {
-
     }
-
-
-
 }

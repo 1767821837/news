@@ -32,8 +32,6 @@ public class GuideActivity extends AppCompatActivity {
     private ImageView iv_red_point;
     private int leftmax;
     private int widths;
-    String[] pageTitles = {"北京", "中国", "国际", "文娱", "体育", "生活", "旅游", "科技", "军事", "财经", "女性", "倍儿逗"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

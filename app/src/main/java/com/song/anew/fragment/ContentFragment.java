@@ -3,7 +3,6 @@ package com.song.anew.fragment;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -14,7 +13,6 @@ import com.song.anew.BasePage;
 import com.song.anew.R;
 import com.song.anew.basepage.Homepage;
 import com.song.anew.basepage.Settingpage;
-import com.song.anew.basepage.Shoppingpage;
 import com.song.anew.basepage.lookpage;
 import com.song.anew.basepage.newspage;
 import com.song.anew.view.CustomScrollViewPager;
@@ -44,12 +42,9 @@ public class ContentFragment extends BaseFragment {
 
     @Override
     public View initview() {
-
         view = View.inflate(context, R.layout.content_fragment, null);
-
         RadioButton radioButton = view.findViewById(R.id.rb_home);
         radioButton.setTextColor(Color.argb(255, 235, 2, 0));
-
         x.view().inject(this, view);
         rg.check(R.id.rb_home);
         rg.setOnCheckedChangeListener(new MyCheckchanglistener());
@@ -77,13 +72,13 @@ public class ContentFragment extends BaseFragment {
             setColor();
             switch (checkedId) {
                 case R.id.rb_home:
-                    //Log.e("tyh", "onCheckedChanged: 1");
+
                     rbHome.setTextColor(Color.argb(255, 235, 2, 0));
                     viewPagers.setCurrentItem(0,false);
                     break;
                 case R.id.rg_news:
                     //Log.e("tyh", "onCheckedChanged: 2");
-                    rbNews.setTextColor(Color.argb(255, 235, 2, 0));
+                    rbNews.setTextColor(Color.argb(255, 10, 10, 10));
                     viewPagers.setCurrentItem(1,false);
                     break;
                 case R.id.rb_look:

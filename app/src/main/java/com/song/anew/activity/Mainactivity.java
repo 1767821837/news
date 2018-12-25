@@ -125,17 +125,8 @@ public class Mainactivity extends SlidingFragmentActivity {
         return getSupportFragmentManager();
     }
 
- /*   @Override
-    public void onBackPressed() {
-        long time = SystemClock.currentThreadTimeMillis();
-        if((time+2000)!=0){
-
-        }
-    }*/
-
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-
 
         if (keyCode==KeyEvent.KEYCODE_BACK){
             long secondTime = System.currentTimeMillis();

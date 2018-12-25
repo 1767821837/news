@@ -33,6 +33,9 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.xutils.view.annotation.ContentView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,7 +70,7 @@ public class loginActivity extends Activity {
                     user.setName(etUser.getText().toString() + "");
                     Log.i("========", "onFocusChange: " + user.getName());
                     OkHttpUtils.postString()
-                            .url("http://134.175.154.154/new/api/news/getphoto")
+                            .url("http://skybingbian.xyz/new/api/news/getphoto")
                             .content(new Gson().toJson(user))
                             .mediaType(MediaType.parse("application/json; charset=utf-8"))
                             .build()
@@ -157,7 +160,6 @@ public class loginActivity extends Activity {
                                 public void onResponse(String response, int id) {
                                     Gson gson = new Gson();
                                     User user = gson.fromJson(response, User.class);
-                                    Log.i("8888", "onResponse: " + user);
                                     if (user == null) {
                                         Toast.makeText(loginActivity.this, "账号或密码错误", Toast.LENGTH_SHORT).show();
                                         show.dismiss();
